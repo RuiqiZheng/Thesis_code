@@ -1,25 +1,15 @@
 # show the necessity of the portion of under/over sampling
 from __future__ import division
 from __future__ import print_function
-import sklearn.metrics
-import sys
-import time
-import argparse
-import numpy as np
-import scipy.sparse as sp
-import torch
-import torch.nn.functional as F
-import torch.optim as optim
-from torch.autograd import Variable
-from imblearn.under_sampling import RandomUnderSampler
-from utils import load_data, accuracy, add_edges, accuracy_test
-from models import GCN_Attention
-from models import Generator
-from models import GCN
-import smote_variants as sv
-import sklearn
+
 import matplotlib.pyplot as plt
+import numpy as np
+import sklearn
+import sklearn.metrics
+from imblearn.under_sampling import RandomUnderSampler
 from sklearn import linear_model
+from sklearn.manifold import TSNE
+from utils import load_data
 
 dataset = 'pubmed'
 path = "dataset/" + dataset + "/"
@@ -62,19 +52,31 @@ def calculate_0_1(labels):
     print('1: ', len(labels_1))
 
 
+def reduce_dimension(X_res, reduce_method):
+    if reduce_method == 'pca':
+        pca = sklearn.decomposition.PCA(n_components=2)
+        pca.fit(X_res)
+        X_res_pca = pca.transform(X_res)
+        return X_res_pca
+    if reduce_method == 'tsne':
+        X_res_tsne = TSNE(n_components=2).fit_transform(X_res)
+        return X_res_tsne
+    else:
+        raise TypeError('method \'reduce_dimension\' does not support reduce dimension method other than pca and tsne')
+
+
 def plot(X_res, y_res, index, info):
-    pca = sklearn.decomposition.PCA(n_components=2)
+    reduce_method = 'tsne'
+    X_res_reduce_dimension = reduce_dimension(X_res, reduce_method)
     plt.figure(figsize=(8, 8))
     colors = ['navy', 'darkorange']
     test_colors = ['black', 'grey']
-    pca.fit(X_res)
-    X_res_pca = pca.transform(X_res)
 
     # pca.fit(X_res_test)
     # X_res_test_pca = pca.transform(X_res_test)
 
     for color, i, target_name in zip(colors, [0, 1], ['majority', 'minority']):
-        plt.scatter(X_res_pca[y_res == i, 0], X_res_pca[y_res == i, 1],
+        plt.scatter(X_res_reduce_dimension[y_res == i, 0], X_res_reduce_dimension[y_res == i, 1],
                     color=color, lw=0.01, label=target_name)
 
     # for color, i, target_name in zip(test_colors, [0, 1], ['test_majority', 'test_minority']):
@@ -86,7 +88,7 @@ def plot(X_res, y_res, index, info):
         plt.plot([], [], ' ', label=str(parameter) + ": " + str(info[parameter]))
     plt.legend(loc="best", shadow=False, scatterpoints=1)
 
-    plt.savefig('pic/evolution/Pubmed_undersample_{}.png'.format(index), dpi=1000)
+    plt.savefig('pic/evolution/Pubmed_undersample_{}_{}.png'.format(index, reduce_method), dpi=300)
     plt.show()
 
 
