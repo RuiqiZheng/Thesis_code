@@ -1,0 +1,61 @@
+Loading citeseer dataset...
+Number of majority:  2450
+Number of minority:  199
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:529: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:530: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+0.1   0.5
+2021-03-11 11:03:06,035:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.5, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.5
+[0.9125, 0.9576, 0.36, 0.9483, 0.4091, 0.9529, 0.383, 0.6588]
+0.1   0.55
+2021-03-11 11:03:10,686:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.55, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.55
+[0.914, 0.9576, 0.38, 0.9498, 0.4222, 0.9537, 0.4, 0.6688]
+0.1   0.6
+2021-03-11 11:03:14,155:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.6, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.6
+[0.9125, 0.9576, 0.36, 0.9483, 0.4091, 0.9529, 0.383, 0.6588]
+0.1   0.65
+2021-03-11 11:03:18,984:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.65, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.65
+[0.911, 0.956, 0.36, 0.9482, 0.4, 0.9521, 0.3789, 0.658]
+0.1   0.7
+2021-03-11 11:03:25,081:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.7, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.7
+[0.9095, 0.9543, 0.36, 0.9481, 0.3913, 0.9512, 0.375, 0.6572]
+0.1   0.75
+2021-03-11 11:03:31,054:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.75, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.75
+[0.9125, 0.9576, 0.36, 0.9483, 0.4091, 0.9529, 0.383, 0.6588]
+0.1   0.8
+2021-03-11 11:03:37,029:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.8, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.8
+[0.9125, 0.9576, 0.36, 0.9483, 0.4091, 0.9529, 0.383, 0.6588]
+0.1   0.85
+2021-03-11 11:03:43,937:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.85, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.85
+[0.9095, 0.9527, 0.38, 0.9496, 0.3958, 0.9511, 0.3878, 0.6663]
+0.1   0.9
+2021-03-11 11:03:49,688:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.9, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.9
+[0.9095, 0.9527, 0.38, 0.9496, 0.3958, 0.9511, 0.3878, 0.6663]
+0.1   0.95
+2021-03-11 11:03:55,854:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 0.95, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 0.95
+[0.9125, 0.956, 0.38, 0.9498, 0.413, 0.9528, 0.3958, 0.668]
+0.1   1.0
+2021-03-11 11:04:02,017:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 1.0, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
+0.1 1.0
+[0.9095, 0.9527, 0.38, 0.9496, 0.3958, 0.9511, 0.3878, 0.6663]
+0.1   1.05
+2021-03-11 11:04:09,752:INFO:SMOTE: Running sampling via ('SMOTE', "{'proportion': 1.05, 'n_neighbors': 5, 'n_jobs': 1, 'random_state': None}")
