@@ -10,10 +10,11 @@ from imblearn.under_sampling import RandomUnderSampler
 from sklearn import linear_model
 from sklearn.manifold import TSNE
 from utils import load_data
+from gcn_utils import load_origin_data
 import random
 import copy
 
-dataset = 'pubmed'
+dataset = 'cora'
 path = "dataset/" + dataset + "/"
 
 if dataset == 'wiki':
@@ -41,8 +42,47 @@ elif dataset == 'dblp':
 elif dataset == 'wiki':
     weight_decay = 0.0005
 
-adj, features, labels, idx_train, idx_test, minority, majority, majority_test, minority_test = load_data(path=path,
-                                                                                                         dataset=dataset)
+
+# adj, features, labels, idx_train, idx_test, minority, majority, majority_test, minority_test = load_data(path=path,
+#                                                                                                          dataset=dataset)
+
+
+def change_label_format(labels):
+    temp_labels = []
+    for i in labels:
+        for j in range(len(i)):
+            if i[j] == 1:
+                temp_labels.append(j)
+                continue
+    temp_labels = np.array(temp_labels)
+    return temp_labels
+
+
+def check_percentage(labels):
+    count_list = [0] * (labels.max() + 1)
+    for i in labels:
+        count_list[i] = count_list[i] + 1
+
+    for i in range(len(count_list)):
+        print('label {} has {} nodes takes up {}'.format(i, count_list[i], count_list[i] / len(labels)))
+
+
+adj, features, labels = load_origin_data('cora')
+features = features.toarray()
+
+labels = change_label_format(labels)
+
+
+
+print(1)
+idx_test = [i for i in range(1000, len(labels))]
+idx_train = [i for i in range(1000)]
+
+# %%
+labels_test = labels[idx_test]
+labels_train = labels[idx_train]
+check_percentage(labels_test)
+check_percentage(labels_train)
 
 
 # %%
@@ -67,34 +107,43 @@ def reduce_dimension(X_res, reduce_method):
         raise TypeError('method \'reduce_dimension\' does not support reduce dimension method other than pca and tsne')
 
 
-def plot(X_res, y_res, index, info):
+def plot_train_test(X_res, y_res, X_test, y_test, index, info, file_name=None):
     reduce_method = 'tsne'
     X_res_reduce_dimension = reduce_dimension(X_res, reduce_method)
+    X_test_reduce_dimension = reduce_dimension(X_test, reduce_method)
     plt.figure(figsize=(8, 8))
     colors = ['navy', 'darkorange']
-    test_colors = ['black', 'grey']
+    test_colors = ['khaki', 'grey']
 
     # pca.fit(X_res_test)
     # X_res_test_pca = pca.transform(X_res_test)
+    if X_test is not None and y_test is not None:
+        for color, i, target_name in zip(test_colors, [0, 1], ['test_majority', 'test_minority']):
+            plt.scatter(X_test_reduce_dimension[y_test == i, 0], X_test_reduce_dimension[y_test == i, 1],
+                        color=color, lw=0.01, label=target_name)
 
     for color, i, target_name in zip(colors, [0, 1], ['majority', 'minority']):
         plt.scatter(X_res_reduce_dimension[y_res == i, 0], X_res_reduce_dimension[y_res == i, 1],
                     color=color, lw=0.01, label=target_name)
 
-    # for color, i, target_name in zip(test_colors, [0, 1], ['test_majority', 'test_minority']):
-    #         plt.scatter(X_res_test_pca[y_res_test == i, 0], X_res_test_pca[y_res_test == i, 1],
-    #                     color=color, lw=2, label=target_name)
-    plt.title("undersampling on Pubmed")
+    plt.title("undersampling on Pubmed and test data")
 
     for parameter in info:
         plt.plot([], [], ' ', label=str(parameter) + ": " + str(info[parameter]))
     plt.legend(loc="best", shadow=False, scatterpoints=1)
-
-    plt.savefig('pic/evolution/Pubmed_undersample_{}_{}.png'.format(index, reduce_method), dpi=300)
+    if file_name is None:
+        plt.savefig('pic/evolution/Pubmed_undersample_{}_{}.png'.format(index, reduce_method), dpi=300)
+    else:
+        plt.savefig(file_name, dpi=300)
     plt.show()
 
 
 def train_logistic_regression(X_samp, y_samp):
+    temp, _ = train_logistic_regression_prediction(X_samp, y_samp)
+    return temp
+
+
+def train_logistic_regression_prediction(X_samp, y_samp):
     logreg = linear_model.LogisticRegression(C=100000.0, class_weight=None, dual=False,
                                              fit_intercept=True, intercept_scaling=1, max_iter=1500,
                                              multi_class='auto', n_jobs=None, penalty='l2', random_state=None,
@@ -115,7 +164,7 @@ def train_logistic_regression(X_samp, y_samp):
            'Precision1': round(a5, 4), 'F1-score0': round(a6, 4), 'F1-score1': round(a7, 4), 'AUC': round(a8, 4)}
     # row = [round(a1, 4), round(a2, 4), round(a3, 4), round(a4, 4), round(a5, 4), round(a6, 4), round(a7, 4),
     #        round(a8, 4)]
-    return row
+    return row, prepro
 
 
 def callback_gen(ga_instance):
@@ -197,7 +246,7 @@ def genetic_algorithm(X, y):
 
     gene_space = [[[0, 1]] * len(X_majority)][0]
     num_genes = len(gene_space)
-    initial_population = np.loadtxt(fname='dataset/evolution_initial_population.txt', dtype=int, delimiter=',')
+    initial_population = np.loadtxt(fname='dataset/pubmed_evolution_initial_population.txt', dtype=int, delimiter=',')
 
     initial_population = initial_population.tolist()
     ga_instance = pygad.GA(num_generations=num_generations,
@@ -223,7 +272,7 @@ def genetic_algorithm(X, y):
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 
-def generate_initial_population(X, y, population_size=50, file_name='dataset/evolution_initial_population.txt'):
+def generate_initial_population(X, y, population_size=50, file_name='dataset/pubmed_evolution_initial_population.txt'):
     X_majority = X[np.where(y == 0)[0]]
     X_minority = X[np.where(y == 1)[0]]
     population = []
@@ -238,20 +287,29 @@ def generate_initial_population(X, y, population_size=50, file_name='dataset/evo
     np.savetxt(fname=file_name, fmt='%i', X=population, delimiter=',')
 
 
+def random_under_sample():
+    for i in range(2):
+        rus = RandomUnderSampler(random_state=i, sampling_strategy=0.9)
+        X_res, y_res = rus.fit_resample(features[idx_train].cpu().numpy(), labels[idx_train].cpu().numpy())
+        X_res_test, y_res_test = features[idx_test].cpu().numpy(), labels[idx_test].cpu().numpy()
+        row, prepro = train_logistic_regression_prediction(X_res, y_res)
+        plot_train_test(X_res, y_res, X_res_test, prepro, i, row,
+                        'pic/evolution/{}_undersample_test_train_seed{}.png'.format(dataset,i))
+        # plot_train_test(X_res, y_res, X_test=None, y_test=None, index=i, info=row)
+
+
 for i in range(1):
-    # rus = RandomUnderSampler(random_state=i, sampling_strategy=0.9)
-    X = features[idx_train].cpu().numpy()
-    y = labels[idx_train].cpu().numpy()
-    if False:
-        generate_initial_population(X, y)
-    generate_initial_population(X, y, 1500, 'dataset/evolution_initial_population_1500.txt')
-    initial_population_fitness = calculate_initial_population('dataset/evolution_initial_population.txt')
-    initial_population_1500_fitness = calculate_initial_population('dataset/evolution_initial_population_1500.txt')
-    draw_violin_plot(initial_population_fitness, initial_population_1500_fitness)
+    # X = features[idx_train].cpu().numpy()
+    # y = labels[idx_train].cpu().numpy()
+    # 
+    # if False:
+    #     generate_initial_population(X, y)
+    # generate_initial_population(X, y, 1500, 'dataset/evolution_initial_population_1500.txt')
+    # initial_population_fitness = calculate_initial_population('dataset/pubmed_evolution_initial_population.txt')
+    # initial_population_1500_fitness = calculate_initial_population('dataset/evolution_initial_population_1500.txt')
+    # draw_violin_plot(initial_population_fitness, initial_population_1500_fitness)
     # genetic_algorithm(X, y)
     # X_res, y_res = rus.fit_resample(features[idx_train].cpu().numpy(), labels[idx_train].cpu().numpy())
     # X_res_test, y_res_test = features[idx_test][[0, 1, 2]].cpu().numpy(), labels[idx_test][[0, 1, 2]].cpu().numpy()
     # calculate_0_1(y_res)
-
-    # raw = train_logistic_regression(X_res, y_res)
-    # plot(X_res, y_res, i, raw)
+    random_under_sample()
