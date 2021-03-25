@@ -132,8 +132,29 @@ def callback_gen(ga_instance):
     print("Generation : ", ga_instance.generations_completed)
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
 
+
+def draw_violin_plot(data1, data2):
+    fig, axs = plt.subplots(nrows=1, ncols=2, figsize=(9, 4))
+    axs[0].violinplot(data1,
+                      showmeans=True,
+                      showmedians=True)
+    axs[0].set_title('initial_population_50')
+    axs[1].violinplot(data2,
+                      showmeans=True,
+                      showmedians=True)
+    axs[1].set_title('initial_population_1500')
+    plt.savefig('pic/evolution/Pubmed_undersample_1500_epoch.png', dpi=200)
+    plt.show()
+
+
 def calculate_initial_population(initial_population_path):
     initial_population = np.loadtxt(fname=initial_population_path, dtype=int, delimiter=',')
+    initial_population = initial_population.tolist()
+    initial_population_fitness = []
+    for solution in initial_population:
+        initial_population_fitness.append(fitness_function(solution, None))
+    return initial_population_fitness
+
 
 def fitness_function(solution, solution_idx):
     global features, labels
@@ -156,7 +177,6 @@ def fitness_function(solution, solution_idx):
     y_resample = np.append(y_majority, y_minority)
     X_resample = np.concatenate((X_majority, X_minority))
     # a = np.concatenate((np.ones(10), np.zeros(10)))
-
 
     fitness = train_logistic_regression(X_resample, y_resample)
     return float(fitness['Recall1'])
@@ -203,11 +223,11 @@ def genetic_algorithm(X, y):
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 
-def generate_initial_population(X, y, population_size=50):
+def generate_initial_population(X, y, population_size=50, file_name='dataset/evolution_initial_population.txt'):
     X_majority = X[np.where(y == 0)[0]]
     X_minority = X[np.where(y == 1)[0]]
     population = []
-    solution = [0] * (len(X_majority) - int(len(X_minority) // 0.9)) + [1] * int(len(X_minority) * 0.9)
+    solution = [0] * (len(X_majority) - int(len(X_minority) * 0.9)) + [1] * int(len(X_minority) * 0.9)
 
     for i in range(population_size):
         temp_solution = copy.deepcopy(solution)
@@ -215,7 +235,7 @@ def generate_initial_population(X, y, population_size=50):
         population.append(temp_solution)
         temp_solution = []
     population = np.array(population, dtype=int)
-    np.savetxt(fname='dataset/evolution_initial_population.txt', fmt='%i', X=population, delimiter=',')
+    np.savetxt(fname=file_name, fmt='%i', X=population, delimiter=',')
 
 
 for i in range(1):
@@ -224,7 +244,11 @@ for i in range(1):
     y = labels[idx_train].cpu().numpy()
     if False:
         generate_initial_population(X, y)
-    genetic_algorithm(X, y)
+    generate_initial_population(X, y, 1500, 'dataset/evolution_initial_population_1500.txt')
+    initial_population_fitness = calculate_initial_population('dataset/evolution_initial_population.txt')
+    initial_population_1500_fitness = calculate_initial_population('dataset/evolution_initial_population_1500.txt')
+    draw_violin_plot(initial_population_fitness, initial_population_1500_fitness)
+    # genetic_algorithm(X, y)
     # X_res, y_res = rus.fit_resample(features[idx_train].cpu().numpy(), labels[idx_train].cpu().numpy())
     # X_res_test, y_res_test = features[idx_test][[0, 1, 2]].cpu().numpy(), labels[idx_test][[0, 1, 2]].cpu().numpy()
     # calculate_0_1(y_res)
