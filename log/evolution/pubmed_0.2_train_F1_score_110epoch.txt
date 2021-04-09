@@ -1,0 +1,238 @@
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:529: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:530: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+Loading pubmed dataset...
+Number of majority:  12470
+Number of minority:  691
+[0.3828, 0.4154, 0.4216, 0.4216, 0.3963, 0.457, 0.3874, 0.4165, 0.4226, 0.4195, 0.4204, 0.3935, 0.4567, 0.4047, 0.4342, 0.4135, 0.4066, 0.407, 0.4158, 0.4126, 0.4232, 0.4108, 0.4002, 0.4299, 0.4043, 0.4126, 0.4106, 0.3945, 0.4134, 0.3915, 0.406, 0.4155, 0.4213, 0.4254, 0.4117, 0.4046, 0.4483, 0.396, 0.4368, 0.4005, 0.3668, 0.4075, 0.4112, 0.3986, 0.405, 0.3854, 0.3874, 0.4115, 0.4003, 0.4274]
+Generation :  1
+Fitness of the best solution : 0.4608
+Generation :  2
+Fitness of the best solution : 0.4655
+Generation :  3
+Fitness of the best solution : 0.4655
+Generation :  4
+Fitness of the best solution : 0.4713
+Generation :  5
+Fitness of the best solution : 0.474
+Generation :  6
+Fitness of the best solution : 0.4749
+Generation :  7
+Fitness of the best solution : 0.4902
+Generation :  8
+Fitness of the best solution : 0.4902
+Generation :  9
+Fitness of the best solution : 0.4902
+Generation :  10
+Fitness of the best solution : 0.4902
+Generation :  11
+Fitness of the best solution : 0.4967
+Generation :  12
+Fitness of the best solution : 0.4967
+Generation :  13
+Fitness of the best solution : 0.5023
+Generation :  14
+Fitness of the best solution : 0.5023
+Generation :  15
+Fitness of the best solution : 0.5042
+Generation :  16
+Fitness of the best solution : 0.5092
+Generation :  17
+Fitness of the best solution : 0.5094
+Generation :  18
+Fitness of the best solution : 0.5104
+Generation :  19
+Fitness of the best solution : 0.5109
+Generation :  20
+Fitness of the best solution : 0.5122
+Generation :  21
+Fitness of the best solution : 0.5203
+Generation :  22
+Fitness of the best solution : 0.5203
+Generation :  23
+Fitness of the best solution : 0.5203
+Generation :  24
+Fitness of the best solution : 0.5203
+Generation :  25
+Fitness of the best solution : 0.5235
+Generation :  26
+Fitness of the best solution : 0.5235
+Generation :  27
+Fitness of the best solution : 0.5264
+Generation :  28
+Fitness of the best solution : 0.5268
+Generation :  29
+Fitness of the best solution : 0.5275
+Generation :  30
+Fitness of the best solution : 0.5279
+Generation :  31
+Fitness of the best solution : 0.5311
+Generation :  32
+Fitness of the best solution : 0.5311
+Generation :  33
+Fitness of the best solution : 0.5326
+Generation :  34
+Fitness of the best solution : 0.5326
+Generation :  35
+Fitness of the best solution : 0.5371
+Generation :  36
+Fitness of the best solution : 0.5371
+Generation :  37
+Fitness of the best solution : 0.5383
+Generation :  38
+Fitness of the best solution : 0.539
+Generation :  39
+Fitness of the best solution : 0.5413
+Generation :  40
+Fitness of the best solution : 0.5413
+Generation :  41
+Fitness of the best solution : 0.542
+Generation :  42
+Fitness of the best solution : 0.5424
+Generation :  43
+Fitness of the best solution : 0.5443
+Generation :  44
+Fitness of the best solution : 0.546
+Generation :  45
+Fitness of the best solution : 0.5462
+Generation :  46
+Fitness of the best solution : 0.5465
+Generation :  47
+Fitness of the best solution : 0.5483
+Generation :  48
+Fitness of the best solution : 0.5483
+Generation :  49
+Fitness of the best solution : 0.5483
+Generation :  50
+Fitness of the best solution : 0.5505
+Generation :  51
+Fitness of the best solution : 0.5523
+Generation :  52
+Fitness of the best solution : 0.553
+Generation :  53
+Fitness of the best solution : 0.5547
+Generation :  54
+Fitness of the best solution : 0.555
+Generation :  55
+Fitness of the best solution : 0.5567
+Generation :  56
+Fitness of the best solution : 0.5567
+Generation :  57
+Fitness of the best solution : 0.5568
+Generation :  58
+Fitness of the best solution : 0.5579
+Generation :  59
+Fitness of the best solution : 0.5579
+Generation :  60
+Fitness of the best solution : 0.5579
+Generation :  61
+Fitness of the best solution : 0.5581
+Generation :  62
+Fitness of the best solution : 0.5582
+Generation :  63
+Fitness of the best solution : 0.5592
+Generation :  64
+Fitness of the best solution : 0.5592
+Generation :  65
+Fitness of the best solution : 0.5592
+Generation :  66
+Fitness of the best solution : 0.5594
+Generation :  67
+Fitness of the best solution : 0.5607
+Generation :  68
+Fitness of the best solution : 0.5614
+Generation :  69
+Fitness of the best solution : 0.5614
+Generation :  70
+Fitness of the best solution : 0.5616
+Generation :  71
+Fitness of the best solution : 0.5616
+Generation :  72
+Fitness of the best solution : 0.5616
+Generation :  73
+Fitness of the best solution : 0.5616
+Generation :  74
+Fitness of the best solution : 0.5616
+Generation :  75
+Fitness of the best solution : 0.5616
+Generation :  76
+Fitness of the best solution : 0.5616
+Generation :  77
+Fitness of the best solution : 0.5616
+Generation :  78
+Fitness of the best solution : 0.5616
+Generation :  79
+Fitness of the best solution : 0.5616
+Generation :  80
+Fitness of the best solution : 0.5618
+Generation :  81
+Fitness of the best solution : 0.5618
+Generation :  82
+Fitness of the best solution : 0.5626
+Generation :  83
+Fitness of the best solution : 0.5626
+Generation :  84
+Fitness of the best solution : 0.5626
+Generation :  85
+Fitness of the best solution : 0.5626
+Generation :  86
+Fitness of the best solution : 0.5626
+Generation :  87
+Fitness of the best solution : 0.5628
+Generation :  88
+Fitness of the best solution : 0.5629
+Generation :  89
+Fitness of the best solution : 0.5629
+Generation :  90
+Fitness of the best solution : 0.5655
+Generation :  91
+Fitness of the best solution : 0.5655
+Generation :  92
+Fitness of the best solution : 0.5655
+Generation :  93
+Fitness of the best solution : 0.5664
+Generation :  94
+Fitness of the best solution : 0.5664
+Generation :  95
+Fitness of the best solution : 0.5672
+Generation :  96
+Fitness of the best solution : 0.5678
+Generation :  97
+Fitness of the best solution : 0.5678
+Generation :  98
+Fitness of the best solution : 0.5678
+Generation :  99
+Fitness of the best solution : 0.568
+Generation :  100
+Fitness of the best solution : 0.5687
+Generation :  101
+Fitness of the best solution : 0.5687
+Generation :  102
+Fitness of the best solution : 0.5687
+Generation :  103
+Fitness of the best solution : 0.5687
+Generation :  104
+Fitness of the best solution : 0.5687
+Generation :  105
+Fitness of the best solution : 0.5693
+Generation :  106
+Fitness of the best solution : 0.5693
+Generation :  107
+Fitness of the best solution : 0.5695
+Generation :  108
+Fitness of the best solution : 0.5695
+Generation :  109
+Fitness of the best solution : 0.5702
+Generation :  110
+Fitness of the best solution : 0.5703
+
+

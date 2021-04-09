@@ -1,0 +1,1316 @@
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:526: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint8 = np.dtype([("qint8", np.int8, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:527: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint8 = np.dtype([("quint8", np.uint8, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:528: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint16 = np.dtype([("qint16", np.int16, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:529: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_quint16 = np.dtype([("quint16", np.uint16, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:530: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  _np_qint32 = np.dtype([("qint32", np.int32, 1)])
+/RuiqiZheng/undergrad_thesis/anaconda3/RichUndergrad/lib/python3.7/site-packages/tensorflow/python/framework/dtypes.py:535: FutureWarning: Passing (type, 1) or '1type' as a synonym of type is deprecated; in a future version of numpy, it will be understood as (type, (1,)) / '(1,)type'.
+  np_resource = np.dtype([("resource", np.ubyte, 1)])
+Loading pubmed dataset...
+Number of majority:  12470
+Number of minority:  691
+[0.3828, 0.4154, 0.4216, 0.4216, 0.3963, 0.457, 0.3874, 0.4165, 0.4226, 0.4195, 0.4204, 0.3935, 0.4567, 0.4047, 0.4342, 0.4135, 0.4066, 0.407, 0.4158, 0.4126, 0.4232, 0.4108, 0.4002, 0.4299, 0.4043, 0.4126, 0.4106, 0.3945, 0.4134, 0.3915, 0.406, 0.4155, 0.4213, 0.4254, 0.4117, 0.4046, 0.4483, 0.396, 0.4368, 0.4005, 0.3668, 0.4075, 0.4112, 0.3986, 0.405, 0.3854, 0.3874, 0.4115, 0.4003, 0.4274]
+Generation :  1
+Fitness of the best solution : 0.4608
+Generation :  2
+Fitness of the best solution : 0.4655
+Generation :  3
+Fitness of the best solution : 0.4655
+Generation :  4
+Fitness of the best solution : 0.4713
+Generation :  5
+Fitness of the best solution : 0.474
+Generation :  6
+Fitness of the best solution : 0.4749
+Generation :  7
+Fitness of the best solution : 0.4902
+Generation :  8
+Fitness of the best solution : 0.4902
+Generation :  9
+Fitness of the best solution : 0.4902
+Generation :  10
+Fitness of the best solution : 0.4902
+Generation :  11
+Fitness of the best solution : 0.4967
+Generation :  12
+Fitness of the best solution : 0.4967
+Generation :  13
+Fitness of the best solution : 0.5023
+Generation :  14
+Fitness of the best solution : 0.5023
+Generation :  15
+Fitness of the best solution : 0.5042
+Generation :  16
+Fitness of the best solution : 0.5092
+Generation :  17
+Fitness of the best solution : 0.5094
+Generation :  18
+Fitness of the best solution : 0.5104
+Generation :  19
+Fitness of the best solution : 0.5109
+Generation :  20
+Fitness of the best solution : 0.5122
+Generation :  21
+Fitness of the best solution : 0.5203
+Generation :  22
+Fitness of the best solution : 0.5203
+Generation :  23
+Fitness of the best solution : 0.5203
+Generation :  24
+Fitness of the best solution : 0.5203
+Generation :  25
+Fitness of the best solution : 0.5235
+Generation :  26
+Fitness of the best solution : 0.5235
+Generation :  27
+Fitness of the best solution : 0.5264
+Generation :  28
+Fitness of the best solution : 0.5268
+Generation :  29
+Fitness of the best solution : 0.5275
+Generation :  30
+Fitness of the best solution : 0.5279
+Generation :  31
+Fitness of the best solution : 0.5311
+Generation :  32
+Fitness of the best solution : 0.5311
+Generation :  33
+Fitness of the best solution : 0.5326
+Generation :  34
+Fitness of the best solution : 0.5326
+Generation :  35
+Fitness of the best solution : 0.5371
+Generation :  36
+Fitness of the best solution : 0.5371
+Generation :  37
+Fitness of the best solution : 0.5383
+Generation :  38
+Fitness of the best solution : 0.539
+Generation :  39
+Fitness of the best solution : 0.5413
+Generation :  40
+Fitness of the best solution : 0.5413
+Generation :  41
+Fitness of the best solution : 0.542
+Generation :  42
+Fitness of the best solution : 0.5424
+Generation :  43
+Fitness of the best solution : 0.5443
+Generation :  44
+Fitness of the best solution : 0.546
+Generation :  45
+Fitness of the best solution : 0.5462
+Generation :  46
+Fitness of the best solution : 0.5465
+Generation :  47
+Fitness of the best solution : 0.5483
+Generation :  48
+Fitness of the best solution : 0.5483
+Generation :  49
+Fitness of the best solution : 0.5483
+Generation :  50
+Fitness of the best solution : 0.5505
+Generation :  51
+Fitness of the best solution : 0.5523
+Generation :  52
+Fitness of the best solution : 0.553
+Generation :  53
+Fitness of the best solution : 0.5547
+Generation :  54
+Fitness of the best solution : 0.555
+Generation :  55
+Fitness of the best solution : 0.5567
+Generation :  56
+Fitness of the best solution : 0.5567
+Generation :  57
+Fitness of the best solution : 0.5568
+Generation :  58
+Fitness of the best solution : 0.5579
+Generation :  59
+Fitness of the best solution : 0.5579
+Generation :  60
+Fitness of the best solution : 0.5579
+Generation :  61
+Fitness of the best solution : 0.5581
+Generation :  62
+Fitness of the best solution : 0.5582
+Generation :  63
+Fitness of the best solution : 0.5592
+Generation :  64
+Fitness of the best solution : 0.5592
+Generation :  65
+Fitness of the best solution : 0.5592
+Generation :  66
+Fitness of the best solution : 0.5594
+Generation :  67
+Fitness of the best solution : 0.5607
+Generation :  68
+Fitness of the best solution : 0.5614
+Generation :  69
+Fitness of the best solution : 0.5614
+Generation :  70
+Fitness of the best solution : 0.5616
+Generation :  71
+Fitness of the best solution : 0.5616
+Generation :  72
+Fitness of the best solution : 0.5616
+Generation :  73
+Fitness of the best solution : 0.5616
+Generation :  74
+Fitness of the best solution : 0.5616
+Generation :  75
+Fitness of the best solution : 0.5616
+Generation :  76
+Fitness of the best solution : 0.5616
+Generation :  77
+Fitness of the best solution : 0.5616
+Generation :  78
+Fitness of the best solution : 0.5616
+Generation :  79
+Fitness of the best solution : 0.5616
+Generation :  80
+Fitness of the best solution : 0.5618
+Generation :  81
+Fitness of the best solution : 0.5618
+Generation :  82
+Fitness of the best solution : 0.5626
+Generation :  83
+Fitness of the best solution : 0.5626
+Generation :  84
+Fitness of the best solution : 0.5626
+Generation :  85
+Fitness of the best solution : 0.5626
+Generation :  86
+Fitness of the best solution : 0.5626
+Generation :  87
+Fitness of the best solution : 0.5628
+Generation :  88
+Fitness of the best solution : 0.5629
+Generation :  89
+Fitness of the best solution : 0.5629
+Generation :  90
+Fitness of the best solution : 0.5655
+Generation :  91
+Fitness of the best solution : 0.5655
+Generation :  92
+Fitness of the best solution : 0.5655
+Generation :  93
+Fitness of the best solution : 0.5664
+Generation :  94
+Fitness of the best solution : 0.5664
+Generation :  95
+Fitness of the best solution : 0.5672
+Generation :  96
+Fitness of the best solution : 0.5678
+Generation :  97
+Fitness of the best solution : 0.5678
+Generation :  98
+Fitness of the best solution : 0.5678
+Generation :  99
+Fitness of the best solution : 0.568
+Generation :  100
+Fitness of the best solution : 0.5687
+Generation :  101
+Fitness of the best solution : 0.5687
+Generation :  102
+Fitness of the best solution : 0.5687
+Generation :  103
+Fitness of the best solution : 0.5687
+Generation :  104
+Fitness of the best solution : 0.5687
+Generation :  105
+Fitness of the best solution : 0.5693
+Generation :  106
+Fitness of the best solution : 0.5693
+Generation :  107
+Fitness of the best solution : 0.5695
+Generation :  108
+Fitness of the best solution : 0.5695
+Generation :  109
+Fitness of the best solution : 0.5702
+Generation :  110
+Fitness of the best solution : 0.5702
+Generation :  111
+Fitness of the best solution : 0.5703
+Generation :  112
+Fitness of the best solution : 0.5703
+Generation :  113
+Fitness of the best solution : 0.5703
+Generation :  114
+Fitness of the best solution : 0.5705
+Generation :  115
+Fitness of the best solution : 0.5705
+Generation :  116
+Fitness of the best solution : 0.5707
+Generation :  117
+Fitness of the best solution : 0.5707
+Generation :  118
+Fitness of the best solution : 0.5707
+Generation :  119
+Fitness of the best solution : 0.5707
+Generation :  120
+Fitness of the best solution : 0.5712
+Generation :  121
+Fitness of the best solution : 0.5712
+Generation :  122
+Fitness of the best solution : 0.5712
+Generation :  123
+Fitness of the best solution : 0.5712
+Generation :  124
+Fitness of the best solution : 0.5712
+Generation :  125
+Fitness of the best solution : 0.5712
+Generation :  126
+Fitness of the best solution : 0.5712
+Generation :  127
+Fitness of the best solution : 0.5712
+Generation :  128
+Fitness of the best solution : 0.5712
+Generation :  129
+Fitness of the best solution : 0.5712
+Generation :  130
+Fitness of the best solution : 0.5712
+Generation :  131
+Fitness of the best solution : 0.5712
+Generation :  132
+Fitness of the best solution : 0.5712
+Generation :  133
+Fitness of the best solution : 0.5712
+Generation :  134
+Fitness of the best solution : 0.5714
+Generation :  135
+Fitness of the best solution : 0.5714
+Generation :  136
+Fitness of the best solution : 0.5714
+Generation :  137
+Fitness of the best solution : 0.5714
+Generation :  138
+Fitness of the best solution : 0.5717
+Generation :  139
+Fitness of the best solution : 0.5717
+Generation :  140
+Fitness of the best solution : 0.5717
+Generation :  141
+Fitness of the best solution : 0.5717
+Generation :  142
+Fitness of the best solution : 0.5717
+Generation :  143
+Fitness of the best solution : 0.5717
+Generation :  144
+Fitness of the best solution : 0.5717
+Generation :  145
+Fitness of the best solution : 0.5717
+Generation :  146
+Fitness of the best solution : 0.5717
+Generation :  147
+Fitness of the best solution : 0.5717
+Generation :  148
+Fitness of the best solution : 0.572
+Generation :  149
+Fitness of the best solution : 0.572
+Generation :  150
+Fitness of the best solution : 0.572
+Generation :  151
+Fitness of the best solution : 0.572
+Generation :  152
+Fitness of the best solution : 0.572
+Generation :  153
+Fitness of the best solution : 0.572
+Generation :  154
+Fitness of the best solution : 0.572
+Generation :  155
+Fitness of the best solution : 0.572
+Generation :  156
+Fitness of the best solution : 0.572
+Generation :  157
+Fitness of the best solution : 0.572
+Generation :  158
+Fitness of the best solution : 0.572
+Generation :  159
+Fitness of the best solution : 0.572
+Generation :  160
+Fitness of the best solution : 0.572
+Generation :  161
+Fitness of the best solution : 0.572
+Generation :  162
+Fitness of the best solution : 0.572
+Generation :  163
+Fitness of the best solution : 0.572
+Generation :  164
+Fitness of the best solution : 0.572
+Generation :  165
+Fitness of the best solution : 0.572
+Generation :  166
+Fitness of the best solution : 0.572
+Generation :  167
+Fitness of the best solution : 0.572
+Generation :  168
+Fitness of the best solution : 0.572
+Generation :  169
+Fitness of the best solution : 0.572
+Generation :  170
+Fitness of the best solution : 0.572
+Generation :  171
+Fitness of the best solution : 0.572
+Generation :  172
+Fitness of the best solution : 0.572
+Generation :  173
+Fitness of the best solution : 0.572
+Generation :  174
+Fitness of the best solution : 0.572
+Generation :  175
+Fitness of the best solution : 0.572
+Generation :  176
+Fitness of the best solution : 0.572
+Generation :  177
+Fitness of the best solution : 0.572
+Generation :  178
+Fitness of the best solution : 0.572
+Generation :  179
+Fitness of the best solution : 0.572
+Generation :  180
+Fitness of the best solution : 0.572
+Generation :  181
+Fitness of the best solution : 0.572
+Generation :  182
+Fitness of the best solution : 0.572
+Generation :  183
+Fitness of the best solution : 0.572
+Generation :  184
+Fitness of the best solution : 0.572
+Generation :  185
+Fitness of the best solution : 0.572
+Generation :  186
+Fitness of the best solution : 0.572
+Generation :  187
+Fitness of the best solution : 0.572
+Generation :  188
+Fitness of the best solution : 0.572
+Generation :  189
+Fitness of the best solution : 0.572
+Generation :  190
+Fitness of the best solution : 0.5722
+Generation :  191
+Fitness of the best solution : 0.5722
+Generation :  192
+Fitness of the best solution : 0.5722
+Generation :  193
+Fitness of the best solution : 0.5722
+Generation :  194
+Fitness of the best solution : 0.5722
+Generation :  195
+Fitness of the best solution : 0.5722
+Generation :  196
+Fitness of the best solution : 0.5722
+Generation :  197
+Fitness of the best solution : 0.5722
+Generation :  198
+Fitness of the best solution : 0.5722
+Generation :  199
+Fitness of the best solution : 0.5722
+Generation :  200
+Fitness of the best solution : 0.5722
+Generation :  201
+Fitness of the best solution : 0.5722
+Generation :  202
+Fitness of the best solution : 0.5722
+Generation :  203
+Fitness of the best solution : 0.5722
+Generation :  204
+Fitness of the best solution : 0.5722
+Generation :  205
+Fitness of the best solution : 0.5722
+Generation :  206
+Fitness of the best solution : 0.5722
+Generation :  207
+Fitness of the best solution : 0.5722
+Generation :  208
+Fitness of the best solution : 0.5722
+Generation :  209
+Fitness of the best solution : 0.5722
+Generation :  210
+Fitness of the best solution : 0.5722
+Generation :  211
+Fitness of the best solution : 0.5722
+Generation :  212
+Fitness of the best solution : 0.5722
+Generation :  213
+Fitness of the best solution : 0.5722
+Generation :  214
+Fitness of the best solution : 0.5722
+Generation :  215
+Fitness of the best solution : 0.5722
+Generation :  216
+Fitness of the best solution : 0.5722
+Generation :  217
+Fitness of the best solution : 0.5722
+Generation :  218
+Fitness of the best solution : 0.5722
+Generation :  219
+Fitness of the best solution : 0.5722
+Generation :  220
+Fitness of the best solution : 0.5722
+Generation :  221
+Fitness of the best solution : 0.5722
+Generation :  222
+Fitness of the best solution : 0.5722
+Generation :  223
+Fitness of the best solution : 0.5722
+Generation :  224
+Fitness of the best solution : 0.5722
+Generation :  225
+Fitness of the best solution : 0.5722
+Generation :  226
+Fitness of the best solution : 0.5722
+Generation :  227
+Fitness of the best solution : 0.5722
+Generation :  228
+Fitness of the best solution : 0.5722
+Generation :  229
+Fitness of the best solution : 0.5722
+Generation :  230
+Fitness of the best solution : 0.5722
+Generation :  231
+Fitness of the best solution : 0.5722
+Generation :  232
+Fitness of the best solution : 0.5722
+Generation :  233
+Fitness of the best solution : 0.5722
+Generation :  234
+Fitness of the best solution : 0.5722
+Generation :  235
+Fitness of the best solution : 0.5722
+Generation :  236
+Fitness of the best solution : 0.5722
+Generation :  237
+Fitness of the best solution : 0.5722
+Generation :  238
+Fitness of the best solution : 0.5725
+Generation :  239
+Fitness of the best solution : 0.5725
+Generation :  240
+Fitness of the best solution : 0.5725
+Generation :  241
+Fitness of the best solution : 0.5725
+Generation :  242
+Fitness of the best solution : 0.5725
+Generation :  243
+Fitness of the best solution : 0.5725
+Generation :  244
+Fitness of the best solution : 0.5725
+Generation :  245
+Fitness of the best solution : 0.5725
+Generation :  246
+Fitness of the best solution : 0.5725
+Generation :  247
+Fitness of the best solution : 0.5725
+Generation :  248
+Fitness of the best solution : 0.5725
+Generation :  249
+Fitness of the best solution : 0.5725
+Generation :  250
+Fitness of the best solution : 0.5725
+Generation :  251
+Fitness of the best solution : 0.5725
+Generation :  252
+Fitness of the best solution : 0.5725
+Generation :  253
+Fitness of the best solution : 0.5725
+Generation :  254
+Fitness of the best solution : 0.5725
+Generation :  255
+Fitness of the best solution : 0.5725
+Generation :  256
+Fitness of the best solution : 0.5725
+Generation :  257
+Fitness of the best solution : 0.5725
+Generation :  258
+Fitness of the best solution : 0.5725
+Generation :  259
+Fitness of the best solution : 0.5725
+Generation :  260
+Fitness of the best solution : 0.5725
+Generation :  261
+Fitness of the best solution : 0.5725
+Generation :  262
+Fitness of the best solution : 0.5725
+Generation :  263
+Fitness of the best solution : 0.5725
+Generation :  264
+Fitness of the best solution : 0.5725
+Generation :  265
+Fitness of the best solution : 0.5725
+Generation :  266
+Fitness of the best solution : 0.5725
+Generation :  267
+Fitness of the best solution : 0.5725
+Generation :  268
+Fitness of the best solution : 0.5725
+Generation :  269
+Fitness of the best solution : 0.5725
+Generation :  270
+Fitness of the best solution : 0.5725
+Generation :  271
+Fitness of the best solution : 0.5725
+Generation :  272
+Fitness of the best solution : 0.5725
+Generation :  273
+Fitness of the best solution : 0.5725
+Generation :  274
+Fitness of the best solution : 0.5725
+Generation :  275
+Fitness of the best solution : 0.5725
+Generation :  276
+Fitness of the best solution : 0.5725
+Generation :  277
+Fitness of the best solution : 0.5725
+Generation :  278
+Fitness of the best solution : 0.5725
+Generation :  279
+Fitness of the best solution : 0.5725
+Generation :  280
+Fitness of the best solution : 0.5725
+Generation :  281
+Fitness of the best solution : 0.5725
+Generation :  282
+Fitness of the best solution : 0.5725
+Generation :  283
+Fitness of the best solution : 0.5725
+Generation :  284
+Fitness of the best solution : 0.5725
+Generation :  285
+Fitness of the best solution : 0.5725
+Generation :  286
+Fitness of the best solution : 0.5725
+Generation :  287
+Fitness of the best solution : 0.5725
+Generation :  288
+Fitness of the best solution : 0.5725
+Generation :  289
+Fitness of the best solution : 0.5725
+Generation :  290
+Fitness of the best solution : 0.5725
+Generation :  291
+Fitness of the best solution : 0.5725
+Generation :  292
+Fitness of the best solution : 0.5725
+Generation :  293
+Fitness of the best solution : 0.5725
+Generation :  294
+Fitness of the best solution : 0.5725
+Generation :  295
+Fitness of the best solution : 0.5725
+Generation :  296
+Fitness of the best solution : 0.5728
+Generation :  297
+Fitness of the best solution : 0.5728
+Generation :  298
+Fitness of the best solution : 0.5728
+Generation :  299
+Fitness of the best solution : 0.5728
+Generation :  300
+Fitness of the best solution : 0.5728
+Generation :  301
+Fitness of the best solution : 0.5728
+Generation :  302
+Fitness of the best solution : 0.5728
+Generation :  303
+Fitness of the best solution : 0.5728
+Generation :  304
+Fitness of the best solution : 0.5728
+Generation :  305
+Fitness of the best solution : 0.5728
+Generation :  306
+Fitness of the best solution : 0.5728
+Generation :  307
+Fitness of the best solution : 0.5728
+Generation :  308
+Fitness of the best solution : 0.5728
+Generation :  309
+Fitness of the best solution : 0.5728
+Generation :  310
+Fitness of the best solution : 0.5728
+Generation :  311
+Fitness of the best solution : 0.5728
+Generation :  312
+Fitness of the best solution : 0.5728
+Generation :  313
+Fitness of the best solution : 0.5728
+Generation :  314
+Fitness of the best solution : 0.5728
+Generation :  315
+Fitness of the best solution : 0.5728
+Generation :  316
+Fitness of the best solution : 0.5728
+Generation :  317
+Fitness of the best solution : 0.5728
+Generation :  318
+Fitness of the best solution : 0.5728
+Generation :  319
+Fitness of the best solution : 0.5728
+Generation :  320
+Fitness of the best solution : 0.5728
+Generation :  321
+Fitness of the best solution : 0.5728
+Generation :  322
+Fitness of the best solution : 0.5728
+Generation :  323
+Fitness of the best solution : 0.5728
+Generation :  324
+Fitness of the best solution : 0.5728
+Generation :  325
+Fitness of the best solution : 0.5728
+Generation :  326
+Fitness of the best solution : 0.5728
+Generation :  327
+Fitness of the best solution : 0.5728
+Generation :  328
+Fitness of the best solution : 0.5728
+Generation :  329
+Fitness of the best solution : 0.5728
+Generation :  330
+Fitness of the best solution : 0.5728
+Generation :  331
+Fitness of the best solution : 0.5728
+Generation :  332
+Fitness of the best solution : 0.5728
+Generation :  333
+Fitness of the best solution : 0.5728
+Generation :  334
+Fitness of the best solution : 0.5728
+Generation :  335
+Fitness of the best solution : 0.5728
+Generation :  336
+Fitness of the best solution : 0.5728
+Generation :  337
+Fitness of the best solution : 0.5728
+Generation :  338
+Fitness of the best solution : 0.5728
+Generation :  339
+Fitness of the best solution : 0.5728
+Generation :  340
+Fitness of the best solution : 0.5728
+Generation :  341
+Fitness of the best solution : 0.5728
+Generation :  342
+Fitness of the best solution : 0.5728
+Generation :  343
+Fitness of the best solution : 0.5728
+Generation :  344
+Fitness of the best solution : 0.5728
+Generation :  345
+Fitness of the best solution : 0.5728
+Generation :  346
+Fitness of the best solution : 0.5728
+Generation :  347
+Fitness of the best solution : 0.5728
+Generation :  348
+Fitness of the best solution : 0.5728
+Generation :  349
+Fitness of the best solution : 0.5728
+Generation :  350
+Fitness of the best solution : 0.5728
+Generation :  351
+Fitness of the best solution : 0.5728
+Generation :  352
+Fitness of the best solution : 0.5728
+Generation :  353
+Fitness of the best solution : 0.5728
+Generation :  354
+Fitness of the best solution : 0.5728
+Generation :  355
+Fitness of the best solution : 0.5728
+Generation :  356
+Fitness of the best solution : 0.5728
+Generation :  357
+Fitness of the best solution : 0.5728
+Generation :  358
+Fitness of the best solution : 0.5728
+Generation :  359
+Fitness of the best solution : 0.5728
+Generation :  360
+Fitness of the best solution : 0.5728
+Generation :  361
+Fitness of the best solution : 0.5728
+Generation :  362
+Fitness of the best solution : 0.5728
+Generation :  363
+Fitness of the best solution : 0.5728
+Generation :  364
+Fitness of the best solution : 0.5728
+Generation :  365
+Fitness of the best solution : 0.5728
+Generation :  366
+Fitness of the best solution : 0.5728
+Generation :  367
+Fitness of the best solution : 0.5728
+Generation :  368
+Fitness of the best solution : 0.5728
+Generation :  369
+Fitness of the best solution : 0.5728
+Generation :  370
+Fitness of the best solution : 0.5728
+Generation :  371
+Fitness of the best solution : 0.5728
+Generation :  372
+Fitness of the best solution : 0.5728
+Generation :  373
+Fitness of the best solution : 0.5728
+Generation :  374
+Fitness of the best solution : 0.5728
+Generation :  375
+Fitness of the best solution : 0.5728
+Generation :  376
+Fitness of the best solution : 0.5728
+Generation :  377
+Fitness of the best solution : 0.5728
+Generation :  378
+Fitness of the best solution : 0.5728
+Generation :  379
+Fitness of the best solution : 0.5728
+Generation :  380
+Fitness of the best solution : 0.5728
+Generation :  381
+Fitness of the best solution : 0.5728
+Generation :  382
+Fitness of the best solution : 0.5728
+Generation :  383
+Fitness of the best solution : 0.5728
+Generation :  384
+Fitness of the best solution : 0.5728
+Generation :  385
+Fitness of the best solution : 0.5728
+Generation :  386
+Fitness of the best solution : 0.5728
+Generation :  387
+Fitness of the best solution : 0.5728
+Generation :  388
+Fitness of the best solution : 0.5728
+Generation :  389
+Fitness of the best solution : 0.5728
+Generation :  390
+Fitness of the best solution : 0.5731
+Generation :  391
+Fitness of the best solution : 0.5731
+Generation :  392
+Fitness of the best solution : 0.5731
+Generation :  393
+Fitness of the best solution : 0.5731
+Generation :  394
+Fitness of the best solution : 0.5731
+Generation :  395
+Fitness of the best solution : 0.5731
+Generation :  396
+Fitness of the best solution : 0.5731
+Generation :  397
+Fitness of the best solution : 0.5731
+Generation :  398
+Fitness of the best solution : 0.5731
+Generation :  399
+Fitness of the best solution : 0.5731
+Generation :  400
+Fitness of the best solution : 0.5731
+Generation :  401
+Fitness of the best solution : 0.5731
+Generation :  402
+Fitness of the best solution : 0.5731
+Generation :  403
+Fitness of the best solution : 0.5731
+Generation :  404
+Fitness of the best solution : 0.5731
+Generation :  405
+Fitness of the best solution : 0.5731
+Generation :  406
+Fitness of the best solution : 0.5731
+Generation :  407
+Fitness of the best solution : 0.5731
+Generation :  408
+Fitness of the best solution : 0.5731
+Generation :  409
+Fitness of the best solution : 0.5731
+Generation :  410
+Fitness of the best solution : 0.5731
+Generation :  411
+Fitness of the best solution : 0.5731
+Generation :  412
+Fitness of the best solution : 0.5731
+Generation :  413
+Fitness of the best solution : 0.5731
+Generation :  414
+Fitness of the best solution : 0.5731
+Generation :  415
+Fitness of the best solution : 0.5731
+Generation :  416
+Fitness of the best solution : 0.5731
+Generation :  417
+Fitness of the best solution : 0.5731
+Generation :  418
+Fitness of the best solution : 0.5731
+Generation :  419
+Fitness of the best solution : 0.5731
+Generation :  420
+Fitness of the best solution : 0.5731
+Generation :  421
+Fitness of the best solution : 0.5731
+Generation :  422
+Fitness of the best solution : 0.5731
+Generation :  423
+Fitness of the best solution : 0.5731
+Generation :  424
+Fitness of the best solution : 0.5731
+Generation :  425
+Fitness of the best solution : 0.5731
+Generation :  426
+Fitness of the best solution : 0.5731
+Generation :  427
+Fitness of the best solution : 0.5731
+Generation :  428
+Fitness of the best solution : 0.5731
+Generation :  429
+Fitness of the best solution : 0.5731
+Generation :  430
+Fitness of the best solution : 0.5731
+Generation :  431
+Fitness of the best solution : 0.5731
+Generation :  432
+Fitness of the best solution : 0.5731
+Generation :  433
+Fitness of the best solution : 0.5731
+Generation :  434
+Fitness of the best solution : 0.5731
+Generation :  435
+Fitness of the best solution : 0.5731
+Generation :  436
+Fitness of the best solution : 0.5731
+Generation :  437
+Fitness of the best solution : 0.5731
+Generation :  438
+Fitness of the best solution : 0.5731
+Generation :  439
+Fitness of the best solution : 0.5731
+Generation :  440
+Fitness of the best solution : 0.5731
+Generation :  441
+Fitness of the best solution : 0.5731
+Generation :  442
+Fitness of the best solution : 0.5731
+Generation :  443
+Fitness of the best solution : 0.5731
+Generation :  444
+Fitness of the best solution : 0.5731
+Generation :  445
+Fitness of the best solution : 0.5731
+Generation :  446
+Fitness of the best solution : 0.5731
+Generation :  447
+Fitness of the best solution : 0.5731
+Generation :  448
+Fitness of the best solution : 0.5731
+Generation :  449
+Fitness of the best solution : 0.5731
+Generation :  450
+Fitness of the best solution : 0.5731
+Generation :  451
+Fitness of the best solution : 0.5731
+Generation :  452
+Fitness of the best solution : 0.5731
+Generation :  453
+Fitness of the best solution : 0.5731
+Generation :  454
+Fitness of the best solution : 0.5731
+Generation :  455
+Fitness of the best solution : 0.5731
+Generation :  456
+Fitness of the best solution : 0.5731
+Generation :  457
+Fitness of the best solution : 0.5731
+Generation :  458
+Fitness of the best solution : 0.5731
+Generation :  459
+Fitness of the best solution : 0.5731
+Generation :  460
+Fitness of the best solution : 0.5731
+Generation :  461
+Fitness of the best solution : 0.5731
+Generation :  462
+Fitness of the best solution : 0.5731
+Generation :  463
+Fitness of the best solution : 0.5731
+Generation :  464
+Fitness of the best solution : 0.5731
+Generation :  465
+Fitness of the best solution : 0.5733
+Generation :  466
+Fitness of the best solution : 0.5733
+Generation :  467
+Fitness of the best solution : 0.5733
+Generation :  468
+Fitness of the best solution : 0.5733
+Generation :  469
+Fitness of the best solution : 0.5733
+Generation :  470
+Fitness of the best solution : 0.5733
+Generation :  471
+Fitness of the best solution : 0.5733
+Generation :  472
+Fitness of the best solution : 0.5733
+Generation :  473
+Fitness of the best solution : 0.5733
+Generation :  474
+Fitness of the best solution : 0.5733
+Generation :  475
+Fitness of the best solution : 0.5733
+Generation :  476
+Fitness of the best solution : 0.5733
+Generation :  477
+Fitness of the best solution : 0.5733
+Generation :  478
+Fitness of the best solution : 0.5733
+Generation :  479
+Fitness of the best solution : 0.5733
+Generation :  480
+Fitness of the best solution : 0.5733
+Generation :  481
+Fitness of the best solution : 0.5733
+Generation :  482
+Fitness of the best solution : 0.5733
+Generation :  483
+Fitness of the best solution : 0.5733
+Generation :  484
+Fitness of the best solution : 0.5733
+Generation :  485
+Fitness of the best solution : 0.5733
+Generation :  486
+Fitness of the best solution : 0.5733
+Generation :  487
+Fitness of the best solution : 0.5733
+Generation :  488
+Fitness of the best solution : 0.5733
+Generation :  489
+Fitness of the best solution : 0.5733
+Generation :  490
+Fitness of the best solution : 0.5733
+Generation :  491
+Fitness of the best solution : 0.5733
+Generation :  492
+Fitness of the best solution : 0.5733
+Generation :  493
+Fitness of the best solution : 0.5733
+Generation :  494
+Fitness of the best solution : 0.5733
+Generation :  495
+Fitness of the best solution : 0.5733
+Generation :  496
+Fitness of the best solution : 0.5733
+Generation :  497
+Fitness of the best solution : 0.5733
+Generation :  498
+Fitness of the best solution : 0.5733
+Generation :  499
+Fitness of the best solution : 0.5733
+Generation :  500
+Fitness of the best solution : 0.5733
+Generation :  501
+Fitness of the best solution : 0.5733
+Generation :  502
+Fitness of the best solution : 0.5733
+Generation :  503
+Fitness of the best solution : 0.5733
+Generation :  504
+Fitness of the best solution : 0.5733
+Generation :  505
+Fitness of the best solution : 0.5733
+Generation :  506
+Fitness of the best solution : 0.5733
+Generation :  507
+Fitness of the best solution : 0.5733
+Generation :  508
+Fitness of the best solution : 0.5733
+Generation :  509
+Fitness of the best solution : 0.5733
+Generation :  510
+Fitness of the best solution : 0.5733
+Generation :  511
+Fitness of the best solution : 0.5733
+Generation :  512
+Fitness of the best solution : 0.5733
+Generation :  513
+Fitness of the best solution : 0.5733
+Generation :  514
+Fitness of the best solution : 0.5733
+Generation :  515
+Fitness of the best solution : 0.5733
+Generation :  516
+Fitness of the best solution : 0.5733
+Generation :  517
+Fitness of the best solution : 0.5733
+Generation :  518
+Fitness of the best solution : 0.5733
+Generation :  519
+Fitness of the best solution : 0.5733
+Generation :  520
+Fitness of the best solution : 0.5733
+Generation :  521
+Fitness of the best solution : 0.5733
+Generation :  522
+Fitness of the best solution : 0.5733
+Generation :  523
+Fitness of the best solution : 0.5733
+Generation :  524
+Fitness of the best solution : 0.5733
+Generation :  525
+Fitness of the best solution : 0.5733
+Generation :  526
+Fitness of the best solution : 0.5733
+Generation :  527
+Fitness of the best solution : 0.5733
+Generation :  528
+Fitness of the best solution : 0.5733
+Generation :  529
+Fitness of the best solution : 0.5733
+Generation :  530
+Fitness of the best solution : 0.5733
+Generation :  531
+Fitness of the best solution : 0.5733
+Generation :  532
+Fitness of the best solution : 0.5733
+Generation :  533
+Fitness of the best solution : 0.5733
+Generation :  534
+Fitness of the best solution : 0.5733
+Generation :  535
+Fitness of the best solution : 0.5733
+Generation :  536
+Fitness of the best solution : 0.5733
+Generation :  537
+Fitness of the best solution : 0.5733
+Generation :  538
+Fitness of the best solution : 0.5733
+Generation :  539
+Fitness of the best solution : 0.5733
+Generation :  540
+Fitness of the best solution : 0.5733
+Generation :  541
+Fitness of the best solution : 0.5733
+Generation :  542
+Fitness of the best solution : 0.5733
+Generation :  543
+Fitness of the best solution : 0.5733
+Generation :  544
+Fitness of the best solution : 0.5733
+Generation :  545
+Fitness of the best solution : 0.5733
+Generation :  546
+Fitness of the best solution : 0.5733
+Generation :  547
+Fitness of the best solution : 0.5733
+Generation :  548
+Fitness of the best solution : 0.5733
+Generation :  549
+Fitness of the best solution : 0.5733
+Generation :  550
+Fitness of the best solution : 0.5733
+Generation :  551
+Fitness of the best solution : 0.5733
+Generation :  552
+Fitness of the best solution : 0.5733
+Generation :  553
+Fitness of the best solution : 0.5733
+Generation :  554
+Fitness of the best solution : 0.5733
+Generation :  555
+Fitness of the best solution : 0.5733
+Generation :  556
+Fitness of the best solution : 0.5733
+Generation :  557
+Fitness of the best solution : 0.5733
+Generation :  558
+Fitness of the best solution : 0.5733
+Generation :  559
+Fitness of the best solution : 0.5733
+Generation :  560
+Fitness of the best solution : 0.5733
+Generation :  561
+Fitness of the best solution : 0.5733
+Generation :  562
+Fitness of the best solution : 0.5733
+Generation :  563
+Fitness of the best solution : 0.5733
+Generation :  564
+Fitness of the best solution : 0.5733
+Generation :  565
+Fitness of the best solution : 0.5733
+Generation :  566
+Fitness of the best solution : 0.5733
+Generation :  567
+Fitness of the best solution : 0.5733
+Generation :  568
+Fitness of the best solution : 0.5733
+Generation :  569
+Fitness of the best solution : 0.5733
+Generation :  570
+Fitness of the best solution : 0.5733
+Generation :  571
+Fitness of the best solution : 0.5733
+Generation :  572
+Fitness of the best solution : 0.5733
+Generation :  573
+Fitness of the best solution : 0.5733
+Generation :  574
+Fitness of the best solution : 0.5733
+Generation :  575
+Fitness of the best solution : 0.5733
+Generation :  576
+Fitness of the best solution : 0.5733
+Generation :  577
+Fitness of the best solution : 0.5733
+Generation :  578
+Fitness of the best solution : 0.5733
+Generation :  579
+Fitness of the best solution : 0.5733
+Generation :  580
+Fitness of the best solution : 0.5733
+Generation :  581
+Fitness of the best solution : 0.5733
+Generation :  582
+Fitness of the best solution : 0.5733
+Generation :  583
+Fitness of the best solution : 0.5733
+Generation :  584
+Fitness of the best solution : 0.5733
+Generation :  585
+Fitness of the best solution : 0.5733
+Generation :  586
+Fitness of the best solution : 0.5733
+Generation :  587
+Fitness of the best solution : 0.5733
+Generation :  588
+Fitness of the best solution : 0.5733
+Generation :  589
+Fitness of the best solution : 0.5733
+Generation :  590
+Fitness of the best solution : 0.5733
+Generation :  591
+Fitness of the best solution : 0.5733
+Generation :  592
+Fitness of the best solution : 0.5733
+Generation :  593
+Fitness of the best solution : 0.5733
+Generation :  594
+Fitness of the best solution : 0.5733
+Generation :  595
+Fitness of the best solution : 0.5733
+Generation :  596
+Fitness of the best solution : 0.5733
+Generation :  597
+Fitness of the best solution : 0.5733
+Generation :  598
+Fitness of the best solution : 0.5733
+Generation :  599
+Fitness of the best solution : 0.5733
+Generation :  600
+Fitness of the best solution : 0.5733
+Generation :  601
+Fitness of the best solution : 0.5733
+Generation :  602
+Fitness of the best solution : 0.5733
+Generation :  603
+Fitness of the best solution : 0.5733
+Generation :  604
+Fitness of the best solution : 0.5733
+Generation :  605
+Fitness of the best solution : 0.5733
+Generation :  606
+Fitness of the best solution : 0.5733
+Generation :  607
+Fitness of the best solution : 0.5733
+Generation :  608
+Fitness of the best solution : 0.5733
+Generation :  609
+Fitness of the best solution : 0.5733
+Generation :  610
+Fitness of the best solution : 0.5733
+Generation :  611
+Fitness of the best solution : 0.5733
+Generation :  612
+Fitness of the best solution : 0.5733
+Generation :  613
+Fitness of the best solution : 0.5733
+Generation :  614
+Fitness of the best solution : 0.5733
+Generation :  615
+Fitness of the best solution : 0.5733
+Generation :  616
+Fitness of the best solution : 0.5733
+Generation :  617
+Fitness of the best solution : 0.5733
+Generation :  618
+Fitness of the best solution : 0.5733
+Generation :  619
+Fitness of the best solution : 0.5733
+Generation :  620
+Fitness of the best solution : 0.5733
+Generation :  621
+Fitness of the best solution : 0.5733
+Generation :  622
+Fitness of the best solution : 0.5733
+Generation :  623
+Fitness of the best solution : 0.5733
+Generation :  624
+Fitness of the best solution : 0.5733
+Generation :  625
+Fitness of the best solution : 0.5733
+Generation :  626
+Fitness of the best solution : 0.5733
+Generation :  627
+Fitness of the best solution : 0.5733
+Generation :  628
+Fitness of the best solution : 0.5733
+Generation :  629
+Fitness of the best solution : 0.5733
+Generation :  630
+Fitness of the best solution : 0.5733
+Generation :  631
+Fitness of the best solution : 0.5733
+Generation :  632
+Fitness of the best solution : 0.5733
+Generation :  633
+Fitness of the best solution : 0.5733
+Generation :  634
+Fitness of the best solution : 0.5733
+Generation :  635
+Fitness of the best solution : 0.5733
+Generation :  636
+Fitness of the best solution : 0.5733
+Generation :  637
+Fitness of the best solution : 0.5733
+Generation :  638
+Fitness of the best solution : 0.5733
+Generation :  639
+Fitness of the best solution : 0.5733
+Generation :  640
+Fitness of the best solution : 0.5733
+Generation :  641
+Fitness of the best solution : 0.5733
+Generation :  642
+Fitness of the best solution : 0.5733
+Generation :  643
+Fitness of the best solution : 0.5733
+Generation :  644
+Fitness of the best solution : 0.5733
+Generation :  645
+Fitness of the best solution : 0.5733
+Generation :  646
+Fitness of the best solution : 0.5733
+Generation :  647
+Fitness of the best solution : 0.5733
+Generation :  648
+Fitness of the best solution : 0.5733
+Generation :  649
+Fitness of the best solution : 0.5733
+Generation :  650
+Fitness of the best solution : 0.5733
