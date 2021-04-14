@@ -92,6 +92,8 @@ def fitness_function(solution, solution_idx):
     train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)
     X_resample = X_resample[:, 1:]
     # a = np.concatenate((np.ones(10), np.zeros(10)))
+    if solution_idx is True:
+        return train_logistic_regression_prediction_multi_label(X_resample, y_resample)
     return calculate_fitness(X_resample, y_resample, 'LR', train_index)
 
 
@@ -116,8 +118,8 @@ def callback_gen(ga_instance):
     fo.close()
     print("Generation : ", ga_instance.generations_completed)
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
-    print(ga_instance.best_solution()[0])
-
+    # print(ga_instance.best_solution()[0])
+    print(fitness_function(ga_instance.best_solution()[0], True))
 
 def multi_label_genetic_algorithm(features_train, labels_train,
                                   initial_population_file_name='dataset/pubmed_evolution_initial_population.txt'):
@@ -164,7 +166,7 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 
-def generate_initial_population(features_train, labels_train, population_size=50*400,
+def generate_initial_population(features_train, labels_train, population_size=50 * 400,
                                 file_name='dataset/cora_multi_label_initial_population_50*400.txt'):
     population = []
     # solution = [0] * (len(X_majority) - int(len(X_minority) * 0.9)) + [1] * int(len(X_minority) * 0.9)
@@ -205,7 +207,11 @@ def generate_initial_population(features_train, labels_train, population_size=50
 
 def calculate_initial_population(initial_population_path):
     initial_population = np.loadtxt(fname=initial_population_path, dtype=int, delimiter=',')
-    initial_population = initial_population.tolist()
+    if (len(initial_population.shape)==1):
+        initial_population = initial_population.tolist()
+        initial_population = [initial_population]
+    else:
+        initial_population = initial_population.tolist()
     print(len(initial_population))
     initial_population_fitness = []
     for i in range(len(initial_population)):
@@ -214,9 +220,15 @@ def calculate_initial_population(initial_population_path):
         print("Evaluate {} th solution".format(i))
     return initial_population_fitness
 
+# initial_population_fitness = calculate_initial_population('dataset/cora_multi_label_initial_population_50*400.txt')
+# print(calculate_initial_population(
+#     "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/cora_multilabel_recall_04081338_best_solution_numpy.txt"))
 
-initial_population_fitness = calculate_initial_population('dataset/cora_multi_label_initial_population_50*400.txt')
-draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
+# path = '/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora_multi_label_initial_population.txt'
+# initial_population_fitness = calculate_initial_population(path)
+# initial_population_fitness = np.array(initial_population_fitness)
+# np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
+# draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
 # generate_initial_population(features[idx_train], labels[idx_train])
-# multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
-#                               'dataset/cora_multi_label_initial_population.txt')
+multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
+                              'dataset/cora_multi_label_initial_population.txt')
