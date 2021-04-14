@@ -86,12 +86,11 @@ def multi_label_under_sampling(features, idx_train, labels):
         one_label_train_index = one_label_train_index[0:72]
         under_sample_idx_train = under_sample_idx_train + one_label_train_index
 
-
     under_sample_idx_train.sort()
     return under_sample_idx_train
 
 def check_percentage(labels):
-    count_list = [0] * (labels.max() + 1)
+    count_list = [0] * (int(labels.max()) + 1)
     for i in labels:
         count_list[i] = count_list[i] + 1
 
@@ -183,7 +182,7 @@ def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches):
 
 # comparison_gcn(adj, features, labels, idx_test, idx_train, 200)
 
-under_sample_idx_train = multi_label_under_sampling(features, idx_train, labels)
+# under_sample_idx_train = multi_label_under_sampling(features, idx_train, labels)
 
 # comparison_gcn(adj, features, labels, idx_test, under_sample_idx_train, 200)
 
@@ -252,7 +251,7 @@ def train_logistic_regression_prediction_multilabel(X_samp, y_samp):
                                              solver='lbfgs', tol=0.0001, verbose=0, warm_start=False)
     logreg.fit(X_samp, y_samp)
     prepro = logreg.predict(features[idx_test])
-    report = classification_report(labels[idx_test], prepro,output_dict = True)
+    report = classification_report(labels[idx_test], prepro, output_dict=True)
     print(classification_report(labels[idx_test], prepro))
     print(1)
     return report
@@ -418,10 +417,7 @@ def random_under_sample():
         print(train_logistic_regression(features[idx_train], labels[idx_train]))
 
 
-
-
-
-for i in range(1):
+def main():
     under_sample_idx_train = multi_label_under_sampling(features, idx_train, labels)
     # train_logistic_regression_prediction_multilabel(features[under_sample_idx_train], labels[under_sample_idx_train])
     report = train_logistic_regression_prediction_multilabel(features[idx_train], labels[idx_train])
@@ -448,4 +444,3 @@ for i in range(1):
     # X_res_test, y_res_test = features[idx_test][[0, 1, 2]]).numpy(), labels[idx_test][[0, 1, 2]]).numpy()
     # calculate_0_1(y_res)
     # random_under_sample()
-    break
