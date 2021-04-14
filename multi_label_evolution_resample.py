@@ -189,7 +189,7 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 
-def generate_initial_population(features_train, labels_train, population_size=50,
+def generate_initial_population(features_train, labels_train, population_size=50*400,
                                 file_name='dataset/cora_multi_label_initial_population_50*400.txt'):
     population = []
     # solution = [0] * (len(X_majority) - int(len(X_minority) * 0.9)) + [1] * int(len(X_minority) * 0.9)
@@ -240,7 +240,7 @@ def calculate_initial_population(initial_population_path):
     print(len(initial_population))
     initial_population_fitness = []
     for i in range(len(initial_population)):
-        initial_population_fitness.append(fitness_function(initial_population[i], None))
+        initial_population_fitness.append(str(fitness_function(initial_population[i], True)))
 
         print("Evaluate {} th solution".format(i))
     return initial_population_fitness
@@ -255,7 +255,10 @@ def calculate_initial_population(initial_population_path):
 # initial_population_fitness = np.array(initial_population_fitness)
 # np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
 # draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
-# generate_initial_population(features[idx_train], labels[idx_train],
-#                             file_name='dataset/citeseer_multi_label_initial_population_50.txt')
-multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
-                              'dataset/citeseer_multi_label_initial_population_50.txt')
+generate_initial_population(features[idx_train], labels[idx_train],
+                            file_name='dataset/citeseer_multi_label_initial_population_50*400.txt')
+initial_population_fitness = calculate_initial_population('dataset/citeseer_multi_label_initial_population_50*400.txt')
+np.savetxt(fname='dataset/citeseer_multi_label_initial_population_f1_50*400.txt', X=initial_population_fitness, fmt='%s',
+           delimiter=',')
+# multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
+#                               'dataset/citeseer_multi_label_initial_population_50.txt')

@@ -58,7 +58,7 @@ plt.ylabel('Fitness')
 
 # giving a title to my graph
 plt.plot([], [], ' ', label="max fitness: {}".format(fitness[-1]))
-plt.title("Cora optimize Recall")
+plt.title("Cora optimize F1score")
 plt.legend()
 
 # function to show the plot
