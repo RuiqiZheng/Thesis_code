@@ -5,7 +5,7 @@ import pygad
 import random
 from sklearn import linear_model
 from sklearn.metrics import classification_report
-
+from utils import load_data
 from comparison.pygcn.pygcn.train import comparison_gcn_train
 from evolution_resample import check_percentage, comparison_gcn, draw_violin_plot
 from gcn_utils import load_origin_data
@@ -26,7 +26,7 @@ def change_label_format(labels):
     return temp_labels
 
 
-adj, features, labels = load_origin_data('citeseer')
+adj, features, labels = load_data('pubmed')
 minority_percentage = 0.2
 
 # %%
