@@ -26,34 +26,41 @@ def change_label_format(labels):
     return temp_labels
 
 
-adj, features, labels = load_data('pubmed')
+adj, features, labels, idx_train_tensor, idx_test_tensor, minority, majority, majority_test, minority_test = load_data(
+    path="dataset/pubmed/", dataset="pubmed")
 minority_percentage = 0.2
 
-# %%
-features = features.toarray()
+adj = adj.to_dense().numpy()
+features = features.cpu().numpy()
+labels = labels.cpu().numpy()
 features_index = np.c_[np.array([i for i in range(0, len(features))]), features]
-adj = adj.toarray()
-
-labels = change_label_format(labels)
-check_percentage(labels)
-
-print(1)
+# %%
+# features = features.toarray()
+# features_index = np.c_[np.array([i for i in range(0, len(features))]), features]
+# adj = adj.toarray()
+#
+# labels = change_label_format(labels)
+# check_percentage(labels)
+#
+# print(1)
 # %%
 # 划分测试集训练集
-test_split_ratio = 0.7
-diffrent_labels_index = []
-for i in range(labels.max() + 1):
-    diffrent_labels_index.append(np.where(labels == i)[0])
-idx_test = []
-idx_train = []
-for one_label_index in diffrent_labels_index:
-    idx_test = idx_test + \
-               one_label_index[int(len(one_label_index) * (1 - test_split_ratio)):-1].reshape(1, -1).tolist()[0]
-    idx_train = idx_train + \
-                one_label_index[0: int(len(one_label_index) * (1 - test_split_ratio))].reshape(1, -1).tolist()[0]
+# test_split_ratio = 0.7
+# diffrent_labels_index = []
+# for i in range(labels.max() + 1):
+#     diffrent_labels_index.append(np.where(labels == i)[0])
+# idx_test = []
+# idx_train = []
+# for one_label_index in diffrent_labels_index:
+#     idx_test = idx_test + \
+#                one_label_index[int(len(one_label_index) * (1 - test_split_ratio)):-1].reshape(1, -1).tolist()[0]
+#     idx_train = idx_train + \
+#                 one_label_index[0: int(len(one_label_index) * (1 - test_split_ratio))].reshape(1, -1).tolist()[0]
 
 # idx_test = [i for i in range(1000, len(labels))]
 # idx_train = [i for i in range(1000)]
+idx_train = idx_test_tensor.numpy()
+idx_test = idx_train_tensor.numpy()
 idx_test.sort()
 idx_train.sort()
 
@@ -74,26 +81,20 @@ def fitness_function(solution, solution_idx):
     features_train = features_index[idx_train]
     labels_train = labels[idx_train]
 
-    features_train_1 = features_train[np.where(labels_train == 1)[0]]
-    features_train_2 = features_train[np.where(labels_train == 2)[0]]
-    features_train_3 = features_train[np.where(labels_train == 3)[0]]
-    features_train_4 = features_train[np.where(labels_train == 4)[0]]
-    features_train_5 = features_train[np.where(labels_train == 5)[0]]
+    features_train_1 = features_train[np.where(labels_train == 0)[0]]
 
-    features_train_0 = features_train[np.where(labels_train == 0)[0]]
+
+    features_train_0 = features_train[np.where(labels_train == 1)[0]]
     # features_train_6 = features_train[np.where(labels_train == 6)[0]]
 
-    labels_majorities = [1] * len(features_train_1) + [2] * len(features_train_2) + [3] * len(features_train_3) + [
-        4] * len(
-        features_train_4) + [5] * len(features_train_5)
+    labels_majorities = [0] * len(features_train_1)
     labels_majorities = np.array(labels_majorities)
 
     # labels_minorities = [0] * len(features_train_0) + [6] * len(features_train_6)
-    labels_minorities = [0] * len(features_train_0)
+    labels_minorities = [1] * len(features_train_0)
     labels_minorities = np.array(labels_minorities)
 
-    features_train_majorities = np.concatenate(
-        (features_train_1, features_train_2, features_train_3, features_train_4, features_train_5))
+    features_train_majorities = features_train_1
     features_train_minorities = features_train_0
     # features_train_minorities = np.concatenate((features_train_1, features_train_6))
 
@@ -122,7 +123,7 @@ def fitness_function(solution, solution_idx):
 def calculate_fitness(X_resample, y_resample, method, idx_train_m):
     if method == 'LR':
         report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
-        return report['0']['f1-score']
+        return report['1']['f1-score']
     else:
         return comparison_gcn(adj, features, labels, idx_test, idx_train_m, 200)
 
@@ -146,11 +147,8 @@ def callback_gen(ga_instance):
 
 def multi_label_genetic_algorithm(features_train, labels_train,
                                   initial_population_file_name='dataset/pubmed_evolution_initial_population.txt'):
-    X_1 = features_train[np.where(labels_train == 1)[0]]
-    X_2 = features_train[np.where(labels_train == 2)[0]]
-    X_3 = features_train[np.where(labels_train == 3)[0]]
-    X_4 = features_train[np.where(labels_train == 4)[0]]
-    X_5 = features_train[np.where(labels_train == 5)[0]]
+    X_1 = features_train[np.where(labels_train == 0)[0]]
+
 
     num_generations = 1000
     num_parents_mating = 20
@@ -161,7 +159,7 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     mutation_type = "random"
     mutation_percent_genes = 0.1
 
-    gene_space = [[[0, 1]] * (len(X_1) + len(X_2) + len(X_3) + len(X_4) + len(X_5))][0]
+    gene_space = [[[0, 1]] * (len(X_1))][0]
     num_genes = len(gene_space)
     initial_population = np.loadtxt(fname=initial_population_file_name, dtype=int, delimiter=',')
 
@@ -193,32 +191,20 @@ def generate_initial_population(features_train, labels_train, population_size=50
                                 file_name='dataset/cora_multi_label_initial_population_50*400.txt'):
     population = []
     # solution = [0] * (len(X_majority) - int(len(X_minority) * 0.9)) + [1] * int(len(X_minority) * 0.9)
-    features_train_minority = features_train[np.where(labels_train == 0)[0]]
+    features_train_minority = features_train[np.where(labels_train == 1)[0]]
     minority_count = features_train_minority.shape[0]
-    features_train_1 = features_train[np.where(labels_train == 1)[0]]
-    features_train_2 = features_train[np.where(labels_train == 2)[0]]
-    features_train_3 = features_train[np.where(labels_train == 3)[0]]
-    features_train_4 = features_train[np.where(labels_train == 4)[0]]
-    features_train_5 = features_train[np.where(labels_train == 5)[0]]
+    features_train_0 = features_train[np.where(labels_train == 0)[0]]
+
     for i in range(population_size):
         # temp_solution = copy.deepcopy(solution)
-        solution_1 = [0] * (len(features_train_1) - minority_count) + [1] * minority_count
-        solution_2 = [0] * (len(features_train_2) - minority_count) + [1] * minority_count
-        solution_3 = [0] * (len(features_train_3) - minority_count) + [1] * minority_count
-        solution_4 = [0] * (len(features_train_4) - minority_count) + [1] * minority_count
-        solution_5 = [0] * (len(features_train_5) - minority_count) + [1] * minority_count
+        solution_0 = [0] * (len(features_train_0) - minority_count) + [1] * minority_count
 
-        random.shuffle(solution_1)
-        random.shuffle(solution_2)
-        random.shuffle(solution_3)
-        random.shuffle(solution_4)
-        random.shuffle(solution_5)
+
+        random.shuffle(solution_0)
+
         temp_solution = []
-        temp_solution = temp_solution + (solution_1)
-        temp_solution = temp_solution + (solution_2)
-        temp_solution = temp_solution + (solution_3)
-        temp_solution = temp_solution + (solution_4)
-        temp_solution = temp_solution + (solution_5)
+        temp_solution = temp_solution + (solution_0)
+
 
         population.append(temp_solution)
 
@@ -256,6 +242,6 @@ def calculate_initial_population(initial_population_path):
 # np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
 # draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
 generate_initial_population(features[idx_train], labels[idx_train],
-                            file_name='dataset/citeseer_multi_label_initial_population_50.txt')
+                            file_name='dataset/pubmed_multi_label_initial_population_50.txt')
 multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
-                              'dataset/citeseer_multi_label_initial_population_50.txt')
+                              'dataset/pubmed_multi_label_initial_population_50.txt')
