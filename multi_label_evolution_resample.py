@@ -122,7 +122,7 @@ def fitness_function(solution, solution_idx):
 def calculate_fitness(X_resample, y_resample, method, idx_train_m):
     if method == 'LR':
         report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
-        return report['0']['f1-score']
+        return report['0']['recall']
     else:
         return comparison_gcn(adj, features, labels, idx_test, idx_train_m, 200)
 
@@ -255,7 +255,7 @@ def calculate_initial_population(initial_population_path):
 # initial_population_fitness = np.array(initial_population_fitness)
 # np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
 # draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
-generate_initial_population(features[idx_train], labels[idx_train],
-                            file_name='dataset/citeseer_multi_label_initial_population_50.txt')
+# generate_initial_population(features[idx_train], labels[idx_train],
+#                             file_name='dataset/citeseer_multi_label_initial_population_50.txt')
 multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
                               'dataset/citeseer_multi_label_initial_population_50.txt')
