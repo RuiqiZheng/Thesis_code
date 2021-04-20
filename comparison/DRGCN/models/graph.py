@@ -1,6 +1,7 @@
 """Spectral Graph Convolutional filter cell."""
 import numpy as np
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
 import os
 
 def _dot(x, y, sparse=False):

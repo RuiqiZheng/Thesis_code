@@ -81,7 +81,7 @@ def comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_tra
     #       'acc_test: {:.4f}'.format(acc_val.item()),
     #       'time: {:.4f}s'.format(time.time() - t))
     preds = output[idx_test].max(1)[1].type_as(labels)
-    return classification_report(labels[idx_test].detach().numpy(), preds.detach().numpy(),output_dict=True)
+    return classification_report(labels[idx_test].detach().cpu().numpy(), preds.detach().cpu().numpy(),output_dict=True)
 
 
 # def test():
