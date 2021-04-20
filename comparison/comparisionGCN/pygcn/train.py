@@ -140,5 +140,5 @@ for i in range(10):
 
 import json
 
-with open("/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora/cora_gcn_10_repeat_accuracy.json", "w") as outfile:
+with open("/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora/cora_gcn_10_repeat_accuracy_1.json", "w") as outfile:
     json.dump(total_report, outfile)

@@ -40,7 +40,7 @@ def train_logistic_regression_prediction_multi_label(X_samp, y_samp):
     logreg.fit(X_samp, y_samp)
     prepro = logreg.predict(features[idx_test])
 
-    return classification_report(labels[idx_test], prepro)
+    return classification_report(labels[idx_test], prepro, output_dict=True)
 
 
 features_train = features[idx_train]
@@ -76,4 +76,11 @@ y_resample = np.append(y_resample, [4] * len(features_train_4))
 y_resample = np.append(y_resample, label_5_6)
 
 
-print(train_logistic_regression_prediction_multi_label(X_resample, y_resample))
+report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
+
+report_minority_recall = (report['1']['recall'] + report['6']['recall']) / 2
+report_minority_precision = (report['1']['precision'] + report['6']['precision']) / 2
+report_minority_f1_score = (report['1']['f1-score'] + report['6']['f1-score']) / 2
+report_accuracy = report['accuracy']
+
+
