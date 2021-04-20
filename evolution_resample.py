@@ -7,7 +7,7 @@ import numpy as np
 import sklearn
 import sklearn.metrics
 import torch
-from imblearn.under_sampling import RandomUnderSampler
+# from imblearn.under_sampling import RandomUnderSampler
 from sklearn import linear_model
 from sklearn.manifold import TSNE
 from torch import optim
@@ -66,8 +66,9 @@ def change_label_format(labels):
     temp_labels = np.array(temp_labels)
     return temp_labels
 
+
 def multi_label_under_sampling(features, idx_train, labels):
-    under_sample_lists = [0,  2, 3, 4, 5]
+    under_sample_lists = [0, 2, 3, 4, 5]
     under_sample_idx_train = []
     for under_sample_list in under_sample_lists:
         var = np.where(labels == under_sample_list)[0]
@@ -88,6 +89,7 @@ def multi_label_under_sampling(features, idx_train, labels):
 
     under_sample_idx_train.sort()
     return under_sample_idx_train
+
 
 def check_percentage(labels):
     count_list = [0] * (int(labels.max()) + 1)
@@ -150,34 +152,82 @@ check_percentage(labels_train)
 # %%
 
 
-
 # %%
 from comparison.pygcn.pygcn.models import GCN
 from comparison.pygcn.pygcn.train import comparison_gcn_train
 
 
-def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches):
+def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches, report_valid):
     features = torch.FloatTensor(features)
     adj = torch.FloatTensor(adj)
     labels = torch.LongTensor(labels)
+
     hidden = 16
     dropout = 0.5
     weight_decay = 5e-4
     lr = 0.01
     temp_values = []
-    for _ in range(2):
+    reports_re = []
+    for _ in range(10):
         model = GCN(nfeat=features.shape[1],
                     nhid=hidden,
                     nclass=labels.max().item() + 1,
                     dropout=dropout)
         optimizer = optim.Adam(model.parameters(),
                                lr=lr, weight_decay=weight_decay)
+        model.cuda()
+        features_cuda = features.cuda()
+        labels_cuda = labels.cuda()
+        adj_cuda = adj.cuda()
+        idx_train_cuda = torch.tensor(idx_train).cuda()
+        idx_test_cuda = torch.tensor(idx_test).cuda()
         for epoch in range(epoches):
-            report = comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_train, idx_test)
-        temp_value = (report['6']['recall'] + report['1']['recall']) / 2
+            report = comparison_gcn_train(epoch, model, optimizer, features_cuda, labels_cuda, adj_cuda, idx_train_cuda,
+                                          idx_test_cuda)
+            # print(report)
+
+        reports_re.append(report)
+        temp_value = (report['6']['f1-score'] + report['1']['f1-score']) / 2
         temp_values.append(temp_value)
+
+    minority_reports = {}
+    minority_reports['accuracy'] = 0
+    minority_reports['1'] = {}
+    minority_reports['1']['precision'] = 0
+    minority_reports['1']['recall'] = 0
+    minority_reports['1']['f1-score'] = 0
+    minority_reports['6'] = {}
+    minority_reports['6']['precision'] = 0
+    minority_reports['6']['recall'] = 0
+    minority_reports['6']['f1-score'] = 0
+    minority_reports['total'] = {}
+    minority_reports['total']['precision'] = 0
+    minority_reports['total']['recall'] = 0
+    minority_reports['total']['f1-score'] = 0
+
+    for key in minority_reports['1']:
+        for temp_report in reports_re:
+            minority_reports['1'][key] = minority_reports['1'][key] + temp_report['1'][key]
+        minority_reports['1'][key] = minority_reports['1'][key] / len(reports_re)
+
+    for key in minority_reports['6']:
+        for temp_report in reports_re:
+            minority_reports['6'][key] = minority_reports['6'][key] + temp_report['6'][key]
+        minority_reports['6'][key] = minority_reports['6'][key] / len(reports_re)
+
+    for temp_report in reports_re:
+        minority_reports['accuracy'] = minority_reports['accuracy'] + temp_report['accuracy']
+    minority_reports['accuracy'] = minority_reports['accuracy'] / len(reports_re)
+
+    for key in minority_reports['total']:
+        minority_reports['total'][key] = (minority_reports['1'][key] + minority_reports['6'][key])/2
+
+
+    print('individual:{}'.format(minority_reports))
     temp_values = np.array(temp_values)
-    return temp_values.sum()/len(temp_values)
+    # print(temp_values)
+    # print(temp_values.sum() / len(temp_values))
+    return temp_values.sum() / len(temp_values)
 
 
 # comparison_gcn(adj, features, labels, idx_test, idx_train, 200)

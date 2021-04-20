@@ -9,7 +9,7 @@ from sklearn.metrics import classification_report
 from comparison.pygcn.pygcn.train import comparison_gcn_train
 from evolution_resample import change_label_format, check_percentage, comparison_gcn, draw_violin_plot
 from gcn_utils import load_origin_data
-
+global_classification_method = 'GCN'
 adj, features, labels = load_origin_data('cora')
 minority_percentage = 0.2
 features = features.toarray()
@@ -49,7 +49,7 @@ def train_logistic_regression_prediction_multi_label(X_samp, y_samp):
     return classification_report(labels[idx_test], prepro, output_dict=True)
 
 
-def fitness_function(solution, solution_idx):
+def fitness_function(solution, solution_idx ):
     features_train = features_index[idx_train]
     labels_train = labels[idx_train]
 
@@ -89,37 +89,48 @@ def fitness_function(solution, solution_idx):
     y_resample = np.append(labels_majorities_select, labels_minorities)
 
     X_resample = np.concatenate((features_train_majorities_select, features_train_minorities))
-    train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)
+    train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)[0]
     X_resample = X_resample[:, 1:]
     # a = np.concatenate((np.ones(10), np.zeros(10)))
-    if solution_idx is True:
-        return train_logistic_regression_prediction_multi_label(X_resample, y_resample)
-    return calculate_fitness(X_resample, y_resample, 'LR', train_index)
+    if solution_idx == -1:
+        temp_return = calculate_fitness(X_resample, y_resample, global_classification_method, train_index, True)
+    else:
+        temp_return = calculate_fitness(X_resample, y_resample, global_classification_method, train_index, False)
+
+    return temp_return
 
 
-def calculate_fitness(X_resample, y_resample, method, idx_train_m):
+def calculate_fitness(X_resample, y_resample, method, idx_train_m, report_valid = False):
     if method == 'LR':
         report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
-        return (report['6']['f1-score'] + report['1']['f1-score']) / 2
+        if report_valid:
+            return report
+        return (report['6']['recall'] + report['1']['recall']) / 2
+
     else:
-        comparison_gcn(adj, features, labels, idx_test, idx_train_m, 200)
+        return comparison_gcn(adj, features, labels, idx_test, idx_train_m, 200, report_valid)
 
 
 def callback_gen(ga_instance):
-    fo = open("/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/log/evolution/multi_label/cora_0408_1311.txt", "a+")
-    fo.write("Generation : ")
-    fo.write("\n")
-    fo.write(str(ga_instance.generations_completed))
-    fo.write("\n")
-    fo.write("Fitness of the best solution :")
-    fo.write("\n")
-    fo.write(str(ga_instance.best_solution()[1]))
-    fo.write("\n")
-    fo.close()
+    # fo = open("/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/log/evolution/multi_label/cora_0408_1311.txt", "a+")
+    # fo.write("Generation : ")
+    # fo.write("\n")
+    # fo.write(str(ga_instance.generations_completed))
+    # fo.write("\n")
+    # fo.write("Fitness of the best solution :")
+    # fo.write("\n")
+    # fo.write(str(ga_instance.best_solution()[1]))
+    # fo.write("\n")
+    # fo.close()
     print("Generation : ", ga_instance.generations_completed)
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
     # print(ga_instance.best_solution()[0])
-    print(fitness_function(ga_instance.best_solution()[0], True))
+    if global_classification_method == 'LR':
+        print(fitness_function(ga_instance.best_solution()[0], -1))
+    if global_classification_method == 'GCN':
+        print('index of the best solution :', ga_instance.best_solution()[2])
+
+
 
 def multi_label_genetic_algorithm(features_train, labels_train,
                                   initial_population_file_name='dataset/pubmed_evolution_initial_population.txt'):
@@ -129,11 +140,11 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     X_4 = features_train[np.where(labels_train == 4)[0]]
     X_5 = features_train[np.where(labels_train == 5)[0]]
 
-    num_generations = 500
+    num_generations = 1000
     num_parents_mating = 20
     sol_per_pop = 50
     parent_selection_type = "rank"  # steady-state selection
-    keep_parents = 10
+    keep_parents = 20
     crossover_type = "single_point"
     mutation_type = "random"
     mutation_percent_genes = 0.1
@@ -207,7 +218,7 @@ def generate_initial_population(features_train, labels_train, population_size=50
 
 def calculate_initial_population(initial_population_path):
     initial_population = np.loadtxt(fname=initial_population_path, dtype=int, delimiter=',')
-    if (len(initial_population.shape)==1):
+    if (len(initial_population.shape) == 1):
         initial_population = initial_population.tolist()
         initial_population = [initial_population]
     else:
@@ -215,14 +226,30 @@ def calculate_initial_population(initial_population_path):
     print(len(initial_population))
     initial_population_fitness = []
     for i in range(len(initial_population)):
-        initial_population_fitness.append(fitness_function(initial_population[i], None))
+        initial_population_fitness.append(fitness_function(initial_population[i], True))
 
         print("Evaluate {} th solution".format(i))
     return initial_population_fitness
 
+def split_json():
+    import json
+    str_1 = "{'precision': 0.5061224489795918, 'recall': 0.8211920529801324, 'f1-score': 0.6262626262626262}"
+    str_1 = str_1.replace("\'", "\"")
+    res_1 = json.loads(str_1)
+
+    str_2 = "{'precision': 0.391304347826087, 'recall': 0.72, 'f1-score': 0.5070422535211268}"
+    str_2 = str_2.replace("\'", "\"")
+    res_2 = json.loads(str_2)
+
+
+
+
 # initial_population_fitness = calculate_initial_population('dataset/cora_multi_label_initial_population_50*400.txt')
 # print(calculate_initial_population(
 #     "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/cora_multilabel_recall_04081338_best_solution_numpy.txt"))
+# initial_populations = calculate_initial_population(
+#     "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora_multi_label_initial_population.txt")
+# initial_populations = np.array(initial_populations)
 
 # path = '/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora_multi_label_initial_population.txt'
 # initial_population_fitness = calculate_initial_population(path)
