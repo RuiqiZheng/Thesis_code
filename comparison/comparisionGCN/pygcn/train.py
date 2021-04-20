@@ -40,17 +40,16 @@ if args.cuda:
 
 adj, features, labels, idx_train, idx_val, idx_test = load_data()
 
-
-
-
-total_report  = {}
+total_report = {}
 total_report['report_minority_recall'] = []
 total_report['report_minority_precision'] = []
 total_report['report_minority_f1_score'] = []
+total_report['accuracy'] = []
 for i in range(10):
     report_minority_recall_list = []
     report_minority_precision_list = []
     report_minority_f1_score_list = []
+    accuracy_list = []
     for j in range(10):
         # Load data
 
@@ -122,14 +121,24 @@ for i in range(10):
         report_minority_recall = (report['3']['recall'] + report['6']['recall']) / 2
         report_minority_precision = (report['3']['precision'] + report['6']['precision']) / 2
         report_minority_f1_score = (report['3']['f1-score'] + report['6']['f1-score']) / 2
+        report_accuracy = report['accuracy']
         report_minority_recall_list.append(report_minority_recall)
         report_minority_precision_list.append(report_minority_precision)
         report_minority_f1_score_list.append(report_minority_f1_score)
-        print('finish {}, {} '.format(i,j))
+        accuracy_list.append(report_accuracy)
+        print('finish {}, {} '.format(i, j))
     report_minority_recall_list = np.array(report_minority_recall_list)
     report_minority_precision_list = np.array(report_minority_precision_list)
     report_minority_f1_score_list = np.array(report_minority_f1_score_list)
-    total_report['report_minority_recall'].append(report_minority_recall_list.sum()/len(report_minority_recall_list))
-    total_report['report_minority_precision'].append(report_minority_precision_list.sum()/len(report_minority_precision_list))
-    total_report['report_minority_f1_score'].append(report_minority_f1_score_list.sum()/len(report_minority_f1_score_list))
+    accuracy_list = np.array(accuracy_list)
+    total_report['report_minority_recall'].append(report_minority_recall_list.sum() / len(report_minority_recall_list))
+    total_report['report_minority_precision'].append(
+        report_minority_precision_list.sum() / len(report_minority_precision_list))
+    total_report['report_minority_f1_score'].append(
+        report_minority_f1_score_list.sum() / len(report_minority_f1_score_list))
+    total_report['accuracy'].append(accuracy_list.sum() / len(accuracy_list))
 
+import json
+
+with open("/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora/cora_gcn_10_repeat_accuracy.json", "w") as outfile:
+    json.dump(total_report, outfile)
