@@ -257,5 +257,6 @@ def split_json():
 # np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
 # draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
 # generate_initial_population(features[idx_train], labels[idx_train])
-multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
-                              'dataset/cora_multi_label_initial_population.txt')
+# multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
+#                               'dataset/cora_multi_label_initial_population.txt')
+comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)

@@ -191,36 +191,37 @@ def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches, report_v
         temp_values.append(temp_value)
 
     minority_reports = {}
-    minority_reports['accuracy'] = 0
+    minority_reports['accuracy'] = []
     minority_reports['1'] = {}
-    minority_reports['1']['precision'] = 0
-    minority_reports['1']['recall'] = 0
-    minority_reports['1']['f1-score'] = 0
+    minority_reports['1']['precision'] = []
+    minority_reports['1']['recall'] = []
+    minority_reports['1']['f1-score'] = []
     minority_reports['6'] = {}
-    minority_reports['6']['precision'] = 0
-    minority_reports['6']['recall'] = 0
-    minority_reports['6']['f1-score'] = 0
+    minority_reports['6']['precision'] = []
+    minority_reports['6']['recall'] = []
+    minority_reports['6']['f1-score'] = []
     minority_reports['total'] = {}
-    minority_reports['total']['precision'] = 0
-    minority_reports['total']['recall'] = 0
-    minority_reports['total']['f1-score'] = 0
+    minority_reports['total']['precision'] = []
+    minority_reports['total']['recall'] = []
+    minority_reports['total']['f1-score'] = []
 
     for key in minority_reports['1']:
         for temp_report in reports_re:
-            minority_reports['1'][key] = minority_reports['1'][key] + temp_report['1'][key]
-        minority_reports['1'][key] = minority_reports['1'][key] / len(reports_re)
+            minority_reports['1'][key].append(temp_report['1'][key])
+        # minority_reports['1'][key] = minority_reports['1'][key] / len(reports_re)
 
     for key in minority_reports['6']:
         for temp_report in reports_re:
-            minority_reports['6'][key] = minority_reports['6'][key] + temp_report['6'][key]
-        minority_reports['6'][key] = minority_reports['6'][key] / len(reports_re)
+            minority_reports['6'][key].append(temp_report['6'][key])
+        # minority_reports['6'][key] = minority_reports['6'][key] / len(reports_re)
 
     for temp_report in reports_re:
-        minority_reports['accuracy'] = minority_reports['accuracy'] + temp_report['accuracy']
-    minority_reports['accuracy'] = minority_reports['accuracy'] / len(reports_re)
+        minority_reports['accuracy'].append(temp_report['accuracy'])
+    # minority_reports['accuracy'] = minority_reports['accuracy'] / len(reports_re)
 
     for key in minority_reports['total']:
-        minority_reports['total'][key] = (minority_reports['1'][key] + minority_reports['6'][key])/2
+        for temp_report in reports_re:
+            minority_reports['total'][key].append((temp_report['1'][key] + temp_report['6'][key])/2)
 
 
     print('individual:{}'.format(minority_reports))
