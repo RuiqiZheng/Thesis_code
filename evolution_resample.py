@@ -175,7 +175,7 @@ def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches, report_v
         optimizer = optim.Adam(model.parameters(),
                                lr=lr, weight_decay=weight_decay)
         for epoch in range(epoches):
-            print("epoch:{}".format(epoch))
+            # print("epoch:{}".format(epoch))
             report = comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_train, idx_test)
             # print("{}, {}".format(temp_i, epoch))
         temp_value = report['0']['f1-score']

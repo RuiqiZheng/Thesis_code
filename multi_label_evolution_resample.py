@@ -113,6 +113,7 @@ def fitness_function(solution, solution_idx):
     X_resample = np.concatenate((features_train_majorities_select, features_train_minorities))
     train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)
     X_resample = X_resample[:, 1:]
+    print("The index of the solution is: ",solution_idx)
     # a = np.concatenate((np.ones(10), np.zeros(10)))
     if solution_idx == -1:
         temp_return = calculate_fitness(X_resample, y_resample, global_classification_method, train_index, True)

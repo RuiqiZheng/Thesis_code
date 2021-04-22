@@ -66,7 +66,7 @@ for i in range(int(len(random_fitness)/50)):
 random_fitness_list_index = [i for i in range(len(random_fitness_list))]
 # %%
 
-fig, ax = plt.subplots(figsize=(9, 5))
+fig, ax = plt.subplots(figsize=(9, 9))
 if len(generations) != len(fitness):
     print("length of generation: {}, length of fitness: {}".format(len(generations), len(fitness)))
     temp_min = min(len(generations), len(fitness))
@@ -75,10 +75,12 @@ if len(generations) != len(fitness):
 
 generations = generations[0:400]
 fitness = fitness[0:400]
-ax.plot(generations, fitness)
+ax.plot(generations, fitness,label='Genetic Logistic Regression')
 
-ax.plot(random_fitness_list_index, random_fitness_list)
+ax.plot(random_fitness_list_index, random_fitness_list, label='Random Logistic Regression')
 
+ax.plot([i for i in range(400)], [0.3300] * 400, label='SMOTE Logistic Regression')
+ax.plot([i for i in range(400)], [0.3241] * 400, label='GCN')
 plt.xlabel('Generations')
 plt.ylabel('Fitness')
 
