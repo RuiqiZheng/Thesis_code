@@ -7,7 +7,7 @@ import numpy as np
 import sklearn
 import sklearn.metrics
 import torch
-from imblearn.under_sampling import RandomUnderSampler
+# from imblearn.under_sampling import RandomUnderSampler
 from sklearn import linear_model
 from sklearn.manifold import TSNE
 from torch import optim
@@ -66,8 +66,9 @@ def change_label_format(labels):
     temp_labels = np.array(temp_labels)
     return temp_labels
 
+
 def multi_label_under_sampling(features, idx_train, labels):
-    under_sample_lists = [0,  2, 3, 4, 5]
+    under_sample_lists = [0, 2, 3, 4, 5]
     under_sample_idx_train = []
     for under_sample_list in under_sample_lists:
         var = np.where(labels == under_sample_list)[0]
@@ -88,6 +89,7 @@ def multi_label_under_sampling(features, idx_train, labels):
 
     under_sample_idx_train.sort()
     return under_sample_idx_train
+
 
 def check_percentage(labels):
     count_list = [0] * (int(labels.max()) + 1)
@@ -150,13 +152,12 @@ check_percentage(labels_train)
 # %%
 
 
-
 # %%
 from comparison.pygcn.pygcn.models import GCN
 from comparison.pygcn.pygcn.train import comparison_gcn_train
 
 
-def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches):
+def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches, report_valid=False):
     features = torch.FloatTensor(features)
     adj = torch.FloatTensor(adj)
     labels = torch.LongTensor(labels)
@@ -165,7 +166,8 @@ def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches):
     weight_decay = 5e-4
     lr = 0.01
     temp_values = []
-    for _ in range(2):
+    reports_re = []
+    for temp_i in range(10):
         model = GCN(nfeat=features.shape[1],
                     nhid=hidden,
                     nclass=labels.max().item() + 1,
@@ -173,9 +175,38 @@ def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches):
         optimizer = optim.Adam(model.parameters(),
                                lr=lr, weight_decay=weight_decay)
         for epoch in range(epoches):
+            print("epoch:{}".format(epoch))
             report = comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_train, idx_test)
-        temp_value = (report['6']['recall'] + report['1']['recall']) / 2
+            # print("{}, {}".format(temp_i, epoch))
+        temp_value = report['0']['f1-score']
+        print("individual: {}".format(report))
         temp_values.append(temp_value)
+        reports_re.append(report)
+        # print("finish {} iteration.".format(temp_i))
+    minority_reports = {}
+    minority_reports['accuracy'] = []
+    minority_reports['0'] = {}
+    minority_reports['0']['precision'] = []
+    minority_reports['0']['recall'] = []
+    minority_reports['0']['f1-score'] = []
+
+    for key in minority_reports['0']:
+        for temp_report in reports_re:
+            minority_reports['0'][key].append(temp_report['0'][key])
+
+    for temp_report in reports_re:
+        minority_reports['accuracy'].append(temp_report['accuracy'])
+
+    if True:
+        accuracy_average = np.array(minority_reports['accuracy']).mean()
+        precision_average = np.array(minority_reports['0']['precision']).mean()
+        recall_average = np.array(minority_reports['0']['recall']).mean()
+        f1_score_average = np.array(minority_reports['0']['f1-score']).mean()
+
+        print('{}'.format(minority_reports))
+        print('accuracy average: {}, precision average: {}, recall average: {}, f1-score average: {}'.format(
+            accuracy_average, precision_average, recall_average, f1_score_average))
+
     temp_values = np.array(temp_values)
     return temp_values.sum()/len(temp_values)
 
@@ -418,9 +449,9 @@ def random_under_sample():
 
 
 def main():
-    under_sample_idx_train = multi_label_under_sampling(features, idx_train, labels)
+    # under_sample_idx_train = multi_label_under_sampling(features, idx_train, labels)
     # train_logistic_regression_prediction_multilabel(features[under_sample_idx_train], labels[under_sample_idx_train])
-    report = train_logistic_regression_prediction_multilabel(features[idx_train], labels[idx_train])
+    # report = train_logistic_regression_prediction_multilabel(features[idx_train], labels[idx_train])
     # X = features[idx_train]).numpy()
     # y = labels[idx_train]).numpy()
     # 
@@ -444,3 +475,4 @@ def main():
     # X_res_test, y_res_test = features[idx_test][[0, 1, 2]]).numpy(), labels[idx_test][[0, 1, 2]]).numpy()
     # calculate_0_1(y_res)
     # random_under_sample()
+    return 0
