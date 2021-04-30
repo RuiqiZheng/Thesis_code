@@ -43,10 +43,23 @@ def train_logistic_regression_prediction_multi_label(X_samp, y_samp):
                                              fit_intercept=True, intercept_scaling=1, max_iter=1500,
                                              multi_class='auto', n_jobs=None, penalty='l2', random_state=None,
                                              solver='lbfgs', tol=0.0001, verbose=0, warm_start=False)
-    logreg.fit(X_samp, y_samp)
-    prepro = logreg.predict(features[idx_test])
+    logreg.fit(X_samp[list(range(1, len(X_samp), 2))], y_samp[list(range(1, len(X_samp), 2))])
+    # prepro = logreg.predict(features[idx_test])
+    prepro = logreg.predict(X_samp[list(range(0, len(X_samp), 2))])
+    return classification_report(y_samp[list(range(0, len(X_samp), 2))], prepro, output_dict=True)
 
-    return classification_report(labels[idx_test], prepro, output_dict=True)
+def train_test_logistic_regression_prediction_multi_label(X_samp, y_samp):
+    logreg = linear_model.LogisticRegression(C=100000.0, class_weight=None, dual=False,
+                                             fit_intercept=True, intercept_scaling=1, max_iter=1500,
+                                             multi_class='auto', n_jobs=None, penalty='l2', random_state=None,
+                                             solver='lbfgs', tol=0.0001, verbose=0, warm_start=False)
+    logreg.fit(X_samp[list(range(1, len(X_samp), 2))], y_samp[list(range(1, len(X_samp), 2))])
+    # prepro = logreg.predict(features[idx_test])
+    prepro = logreg.predict(X_samp[list(range(0, len(X_samp), 2))])
+    # logreg.fit(X_samp, y_samp)
+    prepro_test = logreg.predict(features[idx_test])
+    # prepro = logreg.predict(X_samp)
+    return [classification_report(y_samp[list(range(0, len(X_samp), 2))], prepro, output_dict=True),classification_report(labels[idx_test], prepro_test, output_dict=True)]
 
 
 def fitness_function(solution, solution_idx ):
@@ -102,10 +115,11 @@ def fitness_function(solution, solution_idx ):
 
 def calculate_fitness(X_resample, y_resample, method, idx_train_m, report_valid = False):
     if method == 'LR':
-        report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
         if report_valid:
-            return report
-        return (report['6']['recall'] + report['1']['recall']) / 2
+            return train_test_logistic_regression_prediction_multi_label(X_resample, y_resample)
+        report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
+
+        return (report['6']['f1-score'] + report['1']['f1-score']) / 2
 
     else:
         return comparison_gcn(adj, features, labels, idx_test, idx_train_m, 200, report_valid)
@@ -126,8 +140,20 @@ def callback_gen(ga_instance):
     print("Fitness of the best solution :", ga_instance.best_solution()[1])
     # print(ga_instance.best_solution()[0])
     if global_classification_method == 'LR':
-        print(fitness_function(ga_instance.best_solution()[0], -1))
+        minority_reports = {}
+        minority_reports['total'] = {}
+        minority_reports['total']['precision'] = []
+        minority_reports['total']['recall'] = []
+        minority_reports['total']['f1-score'] = []
+        temp_reports = fitness_function(ga_instance.best_solution()[0], -1)
+        print('current best solution train_front:{}'.format(temp_reports[0]))
+        print('current best solution test:{}'.format(temp_reports[1]))
+
+        for key in minority_reports['total']:
+            minority_reports['total'][key].append((temp_reports[1]['1'][key] + temp_reports[1]['6'][key]) / 2)
+        print('current best solution test total:{}'.format(minority_reports))
     if global_classification_method == 'GCN':
+        temp_reports = fitness_function(ga_instance.best_solution()[0], -1)
         print('index of the best solution :', ga_instance.best_solution()[2])
 
 
@@ -231,15 +257,11 @@ def calculate_initial_population(initial_population_path):
         print("Evaluate {} th solution".format(i))
     return initial_population_fitness
 
-def split_json():
+def split_json(str_1):
     import json
-    str_1 = "{'precision': 0.5061224489795918, 'recall': 0.8211920529801324, 'f1-score': 0.6262626262626262}"
     str_1 = str_1.replace("\'", "\"")
     res_1 = json.loads(str_1)
-
-    str_2 = "{'precision': 0.391304347826087, 'recall': 0.72, 'f1-score': 0.5070422535211268}"
-    str_2 = str_2.replace("\'", "\"")
-    res_2 = json.loads(str_2)
+    return res_1
 
 
 
@@ -259,4 +281,5 @@ def split_json():
 # generate_initial_population(features[idx_train], labels[idx_train])
 # multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
 #                               'dataset/cora_multi_label_initial_population.txt')
-comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)
+for _ in range (100):
+    comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)

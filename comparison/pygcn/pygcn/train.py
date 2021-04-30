@@ -61,7 +61,7 @@ from pygcn.models import GCN
 #     idx_test = idx_test.cuda()
 
 from sklearn.metrics import classification_report
-def comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_train, idx_test):
+def comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_train, idx_test,report_valid):
     t = time.time()
     model.train()
     optimizer.zero_grad()
@@ -80,8 +80,14 @@ def comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_tra
     #       'loss_test: {:.4f}'.format(loss_val.item()),
     #       'acc_test: {:.4f}'.format(acc_val.item()),
     #       'time: {:.4f}s'.format(time.time() - t))
-    preds = output[idx_test].max(1)[1].type_as(labels)
-    return classification_report(labels[idx_test].detach().cpu().numpy(), preds.detach().cpu().numpy(),output_dict=True)
+    if report_valid:
+        preds = output[idx_test].max(1)[1].type_as(labels)
+        label_report = labels[idx_test]
+    else:
+        preds = output[idx_train].max(1)[1].type_as(labels)
+        label_report = labels[idx_train]
+
+    return classification_report(label_report.detach().cpu().numpy(), preds.detach().cpu().numpy(),output_dict=True)
 
 
 # def test():
