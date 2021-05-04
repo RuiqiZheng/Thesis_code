@@ -11,6 +11,8 @@ from evolution_resample import check_percentage, comparison_gcn, draw_violin_plo
 from gcn_utils import load_origin_data
 
 global_classification_method = 'GCN'
+
+
 def change_label_format(labels):
     temp_labels = []
     for i in labels:
@@ -33,11 +35,23 @@ minority_percentage = 0.2
 features = features.toarray()
 features_index = np.c_[np.array([i for i in range(0, len(features))]), features]
 adj = adj.toarray()
+# %%
 
+# %%
 labels = change_label_format(labels)
 check_percentage(labels)
+label_5_delete_index = []
+for i in range(len(labels)):
+    if labels[i] == 5 and i % 2 == 1:
+        label_5_delete_index.append(i)
+# %%
+label_remain_index = np.delete([i for i in range(len(labels))], label_5_delete_index)
+labels = labels[label_remain_index]
+features = features[label_remain_index]
 
-print(1)
+adj = np.take(np.take(adj, label_remain_index, axis=0), label_remain_index, axis=1)
+
+check_percentage(labels)
 # %%
 # 划分测试集训练集
 test_split_ratio = 0.7
@@ -78,23 +92,23 @@ def fitness_function(solution, solution_idx):
     features_train_2 = features_train[np.where(labels_train == 2)[0]]
     features_train_3 = features_train[np.where(labels_train == 3)[0]]
     features_train_4 = features_train[np.where(labels_train == 4)[0]]
-    features_train_5 = features_train[np.where(labels_train == 5)[0]]
 
+    features_train_5 = features_train[np.where(labels_train == 5)[0]]
     features_train_0 = features_train[np.where(labels_train == 0)[0]]
     # features_train_6 = features_train[np.where(labels_train == 6)[0]]
 
     labels_majorities = [1] * len(features_train_1) + [2] * len(features_train_2) + [3] * len(features_train_3) + [
-        4] * len(
-        features_train_4) + [5] * len(features_train_5)
+        4] * len(features_train_4)
     labels_majorities = np.array(labels_majorities)
 
     # labels_minorities = [0] * len(features_train_0) + [6] * len(features_train_6)
-    labels_minorities = [0] * len(features_train_0)
+    labels_minorities = [0] * len(features_train_0) + [5] * len(features_train_5)
     labels_minorities = np.array(labels_minorities)
 
     features_train_majorities = np.concatenate(
-        (features_train_1, features_train_2, features_train_3, features_train_4, features_train_5))
-    features_train_minorities = features_train_0
+        (features_train_1, features_train_2, features_train_3, features_train_4))
+    # features_train_minorities = features_train_0
+    features_train_minorities = np.concatenate((features_train_0, features_train_5))
     # features_train_minorities = np.concatenate((features_train_1, features_train_6))
 
     solution_index = []
@@ -111,9 +125,8 @@ def fitness_function(solution, solution_idx):
     y_resample = np.append(labels_majorities_select, labels_minorities)
 
     X_resample = np.concatenate((features_train_majorities_select, features_train_minorities))
-    train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)
+    train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)[0]
     X_resample = X_resample[:, 1:]
-    print("The index of the solution is: ",solution_idx)
     # a = np.concatenate((np.ones(10), np.zeros(10)))
     if solution_idx == -1:
         temp_return = calculate_fitness(X_resample, y_resample, global_classification_method, train_index, True)
@@ -122,7 +135,8 @@ def fitness_function(solution, solution_idx):
 
     return temp_return
 
-def calculate_fitness(X_resample, y_resample, method, idx_train_m, report_valid = False):
+
+def calculate_fitness(X_resample, y_resample, method, idx_train_m, report_valid=False):
     if method == 'LR':
         report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
         if report_valid:
@@ -150,6 +164,7 @@ def callback_gen(ga_instance):
     if global_classification_method == 'LR':
         print(fitness_function(ga_instance.best_solution()[0], -1))
     if global_classification_method == 'GCN':
+        temp_reports = fitness_function(ga_instance.best_solution()[0], -1)
         print('index of the best solution :', ga_instance.best_solution()[2])
 
 
@@ -159,9 +174,9 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     X_2 = features_train[np.where(labels_train == 2)[0]]
     X_3 = features_train[np.where(labels_train == 3)[0]]
     X_4 = features_train[np.where(labels_train == 4)[0]]
-    X_5 = features_train[np.where(labels_train == 5)[0]]
+    # X_5 = features_train[np.where(labels_train == 5)[0]]
 
-    num_generations = 1000
+    num_generations = 500
     num_parents_mating = 20
     sol_per_pop = 50
     parent_selection_type = "rank"  # steady-state selection
@@ -170,7 +185,7 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     mutation_type = "random"
     mutation_percent_genes = 0.1
 
-    gene_space = [[[0, 1]] * (len(X_1) + len(X_2) + len(X_3) + len(X_4) + len(X_5))][0]
+    gene_space = [[[0, 1]] * (len(X_1) + len(X_2) + len(X_3) + len(X_4))][0]
     num_genes = len(gene_space)
     initial_population = np.loadtxt(fname=initial_population_file_name, dtype=int, delimiter=',')
 
@@ -198,36 +213,36 @@ def multi_label_genetic_algorithm(features_train, labels_train,
     print("Index of the best solution : {solution_idx}".format(solution_idx=solution_idx))
 
 
-def generate_initial_population(features_train, labels_train, population_size=50*400,
+def generate_initial_population(features_train, labels_train, population_size=50,
                                 file_name='dataset/cora_multi_label_initial_population_50*400.txt'):
     population = []
     # solution = [0] * (len(X_majority) - int(len(X_minority) * 0.9)) + [1] * int(len(X_minority) * 0.9)
-    features_train_minority = features_train[np.where(labels_train == 0)[0]]
+    features_train_minority = features_train[np.where(labels_train == 5)[0]]
     minority_count = features_train_minority.shape[0]
     features_train_1 = features_train[np.where(labels_train == 1)[0]]
     features_train_2 = features_train[np.where(labels_train == 2)[0]]
     features_train_3 = features_train[np.where(labels_train == 3)[0]]
     features_train_4 = features_train[np.where(labels_train == 4)[0]]
-    features_train_5 = features_train[np.where(labels_train == 5)[0]]
+    # features_train_5 = features_train[np.where(labels_train == 5)[0]]
     for i in range(population_size):
         # temp_solution = copy.deepcopy(solution)
         solution_1 = [0] * (len(features_train_1) - minority_count) + [1] * minority_count
         solution_2 = [0] * (len(features_train_2) - minority_count) + [1] * minority_count
         solution_3 = [0] * (len(features_train_3) - minority_count) + [1] * minority_count
         solution_4 = [0] * (len(features_train_4) - minority_count) + [1] * minority_count
-        solution_5 = [0] * (len(features_train_5) - minority_count) + [1] * minority_count
+        # solution_5 = [0] * (len(features_train_5) - minority_count) + [1] * minority_count
 
         random.shuffle(solution_1)
         random.shuffle(solution_2)
         random.shuffle(solution_3)
         random.shuffle(solution_4)
-        random.shuffle(solution_5)
+        # random.shuffle(solution_5)
         temp_solution = []
         temp_solution = temp_solution + (solution_1)
         temp_solution = temp_solution + (solution_2)
         temp_solution = temp_solution + (solution_3)
         temp_solution = temp_solution + (solution_4)
-        temp_solution = temp_solution + (solution_5)
+        # temp_solution = temp_solution + (solution_5)
 
         population.append(temp_solution)
 
@@ -257,24 +272,26 @@ def calculate_initial_population(initial_population_path):
     return None
     return initial_population_fitness
 
+
 def main():
-
     # comparison_gcn(adj, features, labels, idx_test, idx_train, 400, True)
-# initial_population_fitness = calculate_initial_population('dataset/cora_multi_label_initial_population_50*400.txt')
-# print(calculate_initial_population(
-#     "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/cora_multilabel_recall_04081338_best_solution_numpy.txt"))
+    # initial_population_fitness = calculate_initial_population('dataset/cora_multi_label_initial_population_50*400.txt')
+    # print(calculate_initial_population(
+    #     "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/cora_multilabel_recall_04081338_best_solution_numpy.txt"))
 
-# path = '/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora_multi_label_initial_population.txt'
-# initial_population_fitness = calculate_initial_population(path)
-# initial_population_fitness = np.array(initial_population_fitness)
-# np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
-# draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
-# generate_initial_population(features[idx_train], labels[idx_train],
-#                             file_name='dataset/citeseer_multi_label_initial_population_50*400.txt')
-# initial_population_fitness = calculate_initial_population('dataset/citeseer_multi_label_initial_population_50*400.txt')
-# np.savetxt(fname='dataset/citeseer_multi_label_initial_population_f1_50*400.txt', X=initial_population_fitness, fmt='%s',
-#            delimiter=',')
-    multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
-                              'dataset/citeseer_multi_label_initial_population_50.txt')
+    # path = '/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/dataset/cora_multi_label_initial_population.txt'
+    # initial_population_fitness = calculate_initial_population(path)
+    # initial_population_fitness = np.array(initial_population_fitness)
+    # np.savetxt(fname='dataset/cora_multi_label_initial_population_fitness_50*400.txt', X=initial_population_fitness, delimiter=',')
+    # draw_violin_plot(initial_population_fitness, None, 'pic/evolution/cora_multi_label_F1_50*400.png')
+    # generate_initial_population(features[idx_train], labels[idx_train],
+    #                             file_name='dataset/citeseer_multi_label_0_5_initial_population_400.txt')
+    # initial_population_fitness = calculate_initial_population('dataset/citeseer_multi_label_initial_population_50*400.txt')
+    # np.savetxt(fname='dataset/citeseer_multi_label_initial_population_f1_50*400.txt', X=initial_population_fitness, fmt='%s',
+    #            delimiter=',')
+    # multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
+    #                               'dataset/citeseer_multi_label_0_5_initial_population_400.txt')
+    for _ in range(100):
+        comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)
 
 main()

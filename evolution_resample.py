@@ -11,7 +11,7 @@ import torch
 from sklearn import linear_model
 from sklearn.manifold import TSNE
 from torch import optim
-
+import torch.nn.functional as F
 from utils import load_data
 from gcn_utils import load_origin_data
 import random
@@ -97,7 +97,7 @@ def check_percentage(labels):
         count_list[i] = count_list[i] + 1
 
     for i in range(len(count_list)):
-        print('label {} has {} nodes takes up {}'.format(i, count_list[i], count_list[i] / len(labels)))
+        print('label {} has {} nodes takes up {} ~~'.format(i, count_list[i], count_list[i] / len(labels)))
 
 
 adj, features, labels = load_origin_data('cora')
@@ -174,41 +174,92 @@ def comparison_gcn(adj, features, labels, idx_test, idx_train, epoches, report_v
                     dropout=dropout)
         optimizer = optim.Adam(model.parameters(),
                                lr=lr, weight_decay=weight_decay)
+
+        model.cuda()
+        features_cuda = features.cuda()
+        labels_cuda = labels.cuda()
+        adj_cuda = adj.cuda()
+        idx_train_cuda = torch.tensor(idx_train).cuda()
+        idx_test_cuda = torch.tensor(idx_test).cuda()
+
         for epoch in range(epoches):
-            # print("epoch:{}".format(epoch))
-            report = comparison_gcn_train(epoch, model, optimizer, features, labels, adj, idx_train, idx_test)
-            # print("{}, {}".format(temp_i, epoch))
-        temp_value = report['0']['f1-score']
-        print("individual: {}".format(report))
-        temp_values.append(temp_value)
+            model.train()
+            optimizer.zero_grad()
+            output = model(features_cuda, adj_cuda)
+            loss_train = F.nll_loss(output[idx_train], labels_cuda[idx_train])
+            loss_train.backward()
+            optimizer.step()
+
+            # print('Epoch: {:04d}'.format(epoch + 1),
+            #       'loss_train: {:.4f}'.format(loss_train.item()),
+            #       'acc_train: {:.4f}'.format(acc_train.item()),
+            #       'loss_test: {:.4f}'.format(loss_val.item()),
+            #       'acc_test: {:.4f}'.format(acc_val.item()),
+            #       'time: {:.4f}s'.format(time.time() - t))
+        # comparision
+        preds = output[idx_test_cuda].max(1)[1].type_as(labels)
+        label_report = labels[idx_test_cuda]
+        print("comparison:{}".format(
+            classification_report(label_report.detach().cpu().numpy(), preds.detach().cpu().numpy(),
+                                  output_dict=True)))
+        if report_valid:
+            preds = output[idx_test_cuda].max(1)[1].type_as(labels)
+            label_report = labels[idx_test_cuda]
+        else:
+            preds = output[idx_train_cuda].max(1)[1].type_as(labels)
+            label_report = labels[idx_train_cuda]
+
+        report = classification_report(label_report.detach().cpu().numpy(), preds.detach().cpu().numpy(),
+                                       output_dict=True)
+        # print(report)
+
         reports_re.append(report)
-        # print("finish {} iteration.".format(temp_i))
+        # temp_value = (report['6']['f1-score'] + report['1']['f1-score']) / 2
+        # temp_values.append(temp_value)
+
     minority_reports = {}
     minority_reports['accuracy'] = []
     minority_reports['0'] = {}
     minority_reports['0']['precision'] = []
     minority_reports['0']['recall'] = []
     minority_reports['0']['f1-score'] = []
+    minority_reports['5'] = {}
+    minority_reports['5']['precision'] = []
+    minority_reports['5']['recall'] = []
+    minority_reports['5']['f1-score'] = []
+    minority_reports['total'] = {}
+    minority_reports['total']['precision'] = []
+    minority_reports['total']['recall'] = []
+    minority_reports['total']['f1-score'] = []
 
     for key in minority_reports['0']:
         for temp_report in reports_re:
             minority_reports['0'][key].append(temp_report['0'][key])
+        # minority_reports['1'][key] = minority_reports['1'][key] / len(reports_re)
+
+    for key in minority_reports['5']:
+        for temp_report in reports_re:
+            minority_reports['5'][key].append(temp_report['5'][key])
+        # minority_reports['6'][key] = minority_reports['6'][key] / len(reports_re)
 
     for temp_report in reports_re:
         minority_reports['accuracy'].append(temp_report['accuracy'])
+    # minority_reports['accuracy'] = minority_reports['accuracy'] / len(reports_re)
 
-    if True:
-        accuracy_average = np.array(minority_reports['accuracy']).mean()
-        precision_average = np.array(minority_reports['0']['precision']).mean()
-        recall_average = np.array(minority_reports['0']['recall']).mean()
-        f1_score_average = np.array(minority_reports['0']['f1-score']).mean()
+    for key in minority_reports['total']:
+        for temp_report in reports_re:
+            minority_reports['total'][key].append((temp_report['0'][key] + temp_report['5'][key]) / 2)
+    if report_valid:
+        print('test:{}'.format(minority_reports))
 
-        print('{}'.format(minority_reports))
-        print('accuracy average: {}, precision average: {}, recall average: {}, f1-score average: {}'.format(
-            accuracy_average, precision_average, recall_average, f1_score_average))
+    else:
+        print('train:{}'.format(minority_reports))
+    # temp_values = np.array(temp_values)
+    # print(temp_values)
+    # print(temp_values.sum() / len(temp_values))
+    temp_np_array = np.array(minority_reports['total']['f1-score'])
 
-    temp_values = np.array(temp_values)
-    return temp_values.sum()/len(temp_values)
+    return temp_np_array.sum() / len(temp_np_array)
 
 
 # comparison_gcn(adj, features, labels, idx_test, idx_train, 200)
