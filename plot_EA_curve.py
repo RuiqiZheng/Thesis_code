@@ -1,5 +1,30 @@
 import matplotlib.pyplot as plt
 
+path = "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/citeseer_multi_label_0_5_gcn_04301745.txt"
+
+file1 = open(path, 'r')
+Lines = file1.readlines()
+count = 0
+generations = []
+fitness = []
+# Strips the newline character
+count = 0
+for line in Lines:
+    # if line.startswith('Generation'):
+    #     generations.append(int(line.split('  ')[-1]))
+    #
+    # if line.startswith(('Fitness')):
+    #     fitness.append(float(line.split(' ')[-1]))
+    count = count + 1
+    print(line)
+    if count == 100:
+        break
+
+print(fitness)
+
+
+
+# %%
 # plotting the points
 path = "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/cora_multilabel_04081334.txt"
 

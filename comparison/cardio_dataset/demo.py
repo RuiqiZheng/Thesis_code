@@ -75,7 +75,10 @@ temp_label1 = []
 temp_label0 = []
 print("begin tsne")
 # X_embedded = TSNE(n_components=2, random_state=1).fit_transform(features[idx_train])
-X_embedded = PCA(n_components=2, random_state=1).fit_transform(features[idx_train])
+tsne = TSNE(n_components=2, random_state=1)
+pca = PCA(n_components=2, random_state=1)
+pca.fit(features[idx_train])
+X_embedded = pca.transform(features[idx_train])
 print("finish tsne")
 for data, label in zip(X_embedded, labels[idx_train]):
     if label > 0:
@@ -86,18 +89,144 @@ temp_label1 = np.array(temp_label1)
 temp_label0 = np.array(temp_label0)
 # random.Random(130).shuffle(temp_label0)
 # temp_label0 = temp_label0[:len(temp_label1)]
-ax.scatter(temp_label1[:, 0], temp_label1[:, 1], s=5, color={'red'}, label='train set label 1')
-ax.scatter(temp_label0[:, 0], temp_label0[:, 1], s=5, color={'blue'}, label='train set label 0')
+ax.scatter(temp_label1[:, 0], temp_label1[:, 1], s=5, color={'tab:red'}, label='train set label 1', alpha=0.6)
+ax.scatter(temp_label0[:, 0], temp_label0[:, 1], s=5, color={'tab:blue'}, label='train set label 0', alpha=0.6)
 
 ax.legend()
 plt.xlim([-6, 10])
 plt.ylim([-6, 6])
 plt.xlabel("X")
 plt.ylabel("Y")
-plt.savefig("train.png", dpi=300)
+plt.savefig("train.pdf")
 plt.show()
 plt.clf()
 
+def simple_oversamping():
+    fig, ax = plt.subplots()
+    temp_label1 = []
+    temp_label0 = []
+    print("begin tsne")
+    # X_embedded = TSNE(n_components=2, random_state=1).fit_transform(features[idx_train])
+    tsne = TSNE(n_components=2, random_state=1)
+    pca = PCA(n_components=2, random_state=1)
+    pca.fit(features[idx_train])
+    X_embedded = pca.transform(features[idx_train])
+    print("finish tsne")
+    for data, label in zip(X_embedded, labels[idx_train]):
+        if label > 0:
+            temp_label1.append(data)
+        else:
+            temp_label0.append(data)
+    temp_label1 = np.array(temp_label1)
+    temp_label0 = np.array(temp_label0)
+    temp_label1_over = copy.deepcopy(temp_label1)
+    for _ in range(9):
+        temp_label1_over = np.concatenate((temp_label1_over, temp_label1))
+    ax.scatter(temp_label1_over[:, 0], temp_label1[:, 1], s=100, color={'tab:red'}, label='train set label 1', alpha=0.6)
+    ax.scatter(temp_label0[:, 0], temp_label0[:, 1], s=5, color={'tab:blue'}, label='train set label 0', alpha=0.6)
+
+    ax.legend()
+    plt.xlim([-6, 10])
+    plt.ylim([-6, 6])
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.savefig("0_oversampling.pdf")
+    plt.show()
+    plt.clf()
+
+
+def best_fit():
+    best_solution = "[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 1 1 0 0 1 0 0 1 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 1 1 0 1 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 0 1 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 0 0 0 1 0 0 1 0 0 0 0 1 0 1 0 0 0 0 0 0 0 1 0 0 1 0 0 0 0 0 1 0 0 0 0 1 0 1 0 0 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0 1 0 0 0 1 0 0 0 1 1 0 0 0 0 1 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 1 0 0 1 0 1 0 0 0 0 0 0 0 0 0 0 0 1 1 0 0 0 0 0 0 0 0 0 1 0 0 0 0 1 0 1 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0]"
+    best_solution = best_solution[1:-2]
+    best_solution = best_solution.split(' ')
+    best_solution = best_solution[:-1]
+    temp_list = []
+    for i in best_solution:
+        temp_list.append(int(i))
+    temp_list = np.array(temp_list)
+    fitness_function(temp_list, -2)
+
+
+def undersampling():
+    fig, ax = plt.subplots()
+    temp_label1 = []
+    temp_label0 = []
+    print("begin tsne")
+    # X_embedded = TSNE(n_components=2, random_state=1).fit_transform(features[idx_train])
+    tsne = TSNE(n_components=2, random_state=1)
+    pca = PCA(n_components=2, random_state=1)
+    pca.fit(features[idx_train])
+    X_embedded = pca.transform(features[idx_train])
+    print("finish tsne")
+    for data, label in zip(X_embedded, labels[idx_train]):
+        if label > 0:
+            temp_label1.append(data)
+        else:
+            temp_label0.append(data)
+    temp_label1 = np.array(temp_label1)
+    temp_label0 = np.array(temp_label0)
+    temp_label0_outlier = []
+    temp_label0_normal = []
+    for i in temp_label0:
+        #
+        if i[0] + i[1] < -3 or i[1] - i[0] < -4 or i[1] > 3 or i[0] < -3:
+            temp_label0_outlier.append(i)
+        else:
+            temp_label0_normal.append(i)
+    temp_label0_outlier = np.array(temp_label0_outlier)
+    temp_label0_normal = np.array(temp_label0_normal)
+    temp_label0_outlier = temp_label0_outlier[:len(temp_label1) // 4 * 3]
+    temp_label0_normal = temp_label0_normal[:len(temp_label1) // 4]
+    temp_label0 = np.concatenate((temp_label0_outlier, temp_label0_normal))
+    # temp_label0 = temp_label0[:len(temp_label1)]
+    # random.Random(130).shuffle(temp_label0)
+    # temp_label0 = temp_label0[:len(temp_label1)]
+    ax.scatter(temp_label1[:, 0], temp_label1[:, 1], s=5, color={'tab:red'}, label='train set label 1', alpha=0.6)
+    ax.scatter(temp_label0[:, 0], temp_label0[:, 1], s=5, color={'tab:blue'}, label='train set label 0', alpha=0.6)
+
+    ax.legend()
+    plt.xlim([-6, 10])
+    plt.ylim([-6, 6])
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.savefig("random_undersampling.pdf")
+    plt.show()
+    plt.clf()
+
+
+def smote_pic():
+    fig, ax = plt.subplots()
+    import smote_variants as sv
+    temp_label1 = []
+    temp_label0 = []
+    oversampler = sv.SMOTE()
+    oversampler = sv.ADASYN()
+
+    features_train_smote, label_smote = oversampler.sample(features[idx_train], labels[idx_train])
+
+    X_embedded = pca.transform(features_train_smote)
+    print("finish tsne")
+    for data, label in zip(X_embedded, label_smote):
+        if label > 0:
+            temp_label1.append(data)
+        else:
+            temp_label0.append(data)
+    temp_label1 = np.array(temp_label1)
+    temp_label0 = np.array(temp_label0)
+    # random.Random(130).shuffle(temp_label0)
+    # temp_label0 = temp_label0[:len(temp_label1)]
+    ax.scatter(temp_label1[:, 0], temp_label1[:, 1], s=5, color={'tab:red'}, label='train set label 1', alpha=0.6)
+    ax.scatter(temp_label0[:, 0], temp_label0[:, 1], s=5, color={'tab:blue'}, label='train set label 0', alpha=0.6)
+
+    ax.legend()
+    plt.xlim([-6, 10])
+    plt.ylim([-6, 6])
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.savefig("pdf/ADASYN.pdf")
+    plt.show()
+    plt.clf()
+    return 0
 
 def train_logistic_regression(X_samp, y_samp, solution_idx):
     logreg = linear_model.LogisticRegression(C=100000.0, class_weight=None, dual=False,
@@ -105,14 +234,14 @@ def train_logistic_regression(X_samp, y_samp, solution_idx):
                                              multi_class='auto', n_jobs=None, penalty='l2', random_state=None,
                                              solver='lbfgs', tol=0.0001, verbose=0, warm_start=False)
     logreg.fit(X_samp, y_samp)
-    if solution_idx == -1 or solution_idx % 10 == 0:
+    if solution_idx == -1 or solution_idx % 20 == 0 or solution_idx == -2:
         from sklearn.manifold import TSNE
         fig, ax = plt.subplots()
         temp_label1 = []
         temp_label0 = []
         print("begin tsne")
         # X_embedded = TSNE(n_components=2, random_state=1).fit_transform(X_samp)
-        X_embedded = PCA(n_components=2, random_state=1).fit_transform(X_samp)
+        X_embedded = pca.transform(X_samp)
         print("finish tsne")
         for data, label in zip(X_embedded, y_samp):
             if label > 0:
@@ -132,10 +261,10 @@ def train_logistic_regression(X_samp, y_samp, solution_idx):
         global picture_count
         picture_count = picture_count + 1
         if solution_idx == -1:
-            plt.title("current best solution in generation {}".format(picture_count))
+            plt.title("current best solution in generation {}".format(int(picture_count / 50)))
         else:
-            plt.title("individual solution in generation {}".format(picture_count))
-        plt.savefig("train_genetic_epoch_{}.png".format(picture_count), dpi=300)
+            plt.title("individual solution in generation 100".format(int(picture_count / 50)))
+        plt.savefig("pdf/1_train_genetic_epoch_{}_{}.pdf".format(picture_count, solution_idx))
         plt.show()
         plt.clf()
 
@@ -269,5 +398,11 @@ def generate_initial_population(X, y, population_size=50, file_name='cardio_init
     population = np.array(population, dtype=int)
     np.savetxt(fname=file_name, fmt='%i', X=population, delimiter=',')
 
+
 # generate_initial_population(features[idx_train], labels[idx_train])
-genetic_algorithm(features[idx_train], labels[idx_train])
+# genetic_algorithm(features[idx_train], labels[idx_train])
+# undersampling()
+# best_fit()
+# smote_pic()
+# simple_oversamping()
+smote_pic()
