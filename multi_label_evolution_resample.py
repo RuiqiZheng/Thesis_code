@@ -10,7 +10,7 @@ from comparison.pygcn.pygcn.train import comparison_gcn_train
 from evolution_resample import check_percentage, comparison_gcn, draw_violin_plot
 from gcn_utils import load_origin_data
 
-global_classification_method = 'GCN'
+global_classification_method = 'LR'
 
 
 def change_label_format(labels):
@@ -128,6 +128,9 @@ def fitness_function(solution, solution_idx):
     train_index = X_resample[:, 0:1].reshape(1, -1).astype(int)[0]
     X_resample = X_resample[:, 1:]
     # a = np.concatenate((np.ones(10), np.zeros(10)))
+    if global_classification_method == 'LR':
+        print(train_logistic_regression_prediction_multi_label(X_resample, y_resample))
+        return None
     if solution_idx == -1:
         temp_return = calculate_fitness(X_resample, y_resample, global_classification_method, train_index, True)
     else:
@@ -141,7 +144,7 @@ def calculate_fitness(X_resample, y_resample, method, idx_train_m, report_valid=
         report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
         if report_valid:
             return report
-        return ['0']['recall']
+        return ['0']['f1-score']
 
     else:
         return comparison_gcn(adj, features, labels, idx_test, idx_train_m, 200, report_valid)
@@ -289,9 +292,9 @@ def main():
     # initial_population_fitness = calculate_initial_population('dataset/citeseer_multi_label_initial_population_50*400.txt')
     # np.savetxt(fname='dataset/citeseer_multi_label_initial_population_f1_50*400.txt', X=initial_population_fitness, fmt='%s',
     #            delimiter=',')
-    # multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
-    #                               'dataset/citeseer_multi_label_0_5_initial_population_400.txt')
-    for _ in range(100):
-        comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)
+    multi_label_genetic_algorithm(features_index[idx_train], labels[idx_train],
+                                  'dataset/citeseer_multi_label_0_5_initial_population_400.txt')
+    # for _ in range(100):
+    #     comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)
 
 main()

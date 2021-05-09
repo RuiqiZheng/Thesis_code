@@ -1,5 +1,42 @@
 import matplotlib.pyplot as plt
 
+import matplotlib.pyplot as plt
+import json
+import numpy as np
+# path = "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/citeseer_multi_label_0_5_comparision_gcn_04301806.txt"
+path = "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/citeseer_multi_label_0_5_gcn_04301745.txt"
+file1 = open(path, 'r')
+Lines = file1.readlines()
+count = 0
+generations = []
+fitness = []
+# Strips the newline character
+count = 0
+
+for line in Lines:
+    # if line.startswith('Generation'):
+    #     generations.append(int(line.split('  ')[-1]))
+    #
+    if line.startswith(('test:')):
+
+        str_1 = line.replace("\'", "\"")
+        str_1 = str_1.split("test:")[1]
+        temp_dic = json.loads(str_1)
+        fitness.append(np.array(temp_dic['accuracy']).mean())
+        # if (np.array(temp_dic['total']['f1-score']).mean()) > 0.4:
+        #     max_dic = temp_dic
+        #     print(line)
+        print(temp_dic)
+        break
+    count = count + 1
+    # print(line)
+    # if count == 1000:
+    #     break
+
+print(fitness)
+print(np.array(fitness).mean())
+print(np.array(fitness).std())
+# %%
 
 # plotting the points
 path = "/RuiqiZheng/undergrad_thesis/undergrad_thesis_code/citeseer_multilabel_LR_04141648.txt"

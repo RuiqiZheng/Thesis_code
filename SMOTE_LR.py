@@ -12,6 +12,8 @@ adj = adj.toarray()
 labels = change_label_format(labels)
 check_percentage(labels)
 print(1)
+
+from imblearn.under_sampling import NearMiss
 # %%
 # 划分测试集训练集
 test_split_ratio = 0.7
