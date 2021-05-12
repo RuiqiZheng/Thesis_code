@@ -23,11 +23,13 @@ for line in Lines:
         str_1 = str_1.split("test:")[1]
         temp_dic = json.loads(str_1)
         fitness.append(np.array(temp_dic['accuracy']).mean())
+        if np.array(temp_dic['accuracy']).mean() > 0.573:
+            print(line)
+
         # if (np.array(temp_dic['total']['f1-score']).mean()) > 0.4:
         #     max_dic = temp_dic
         #     print(line)
-        print(temp_dic)
-        break
+
     count = count + 1
     # print(line)
     # if count == 1000:

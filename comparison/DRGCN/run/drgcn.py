@@ -3,12 +3,17 @@ import tensorflow as tf
 import numpy as np
 import sys 
 sys.path.append('..')
-import models.graph as mg
-import models.gmm as g
-import models.adversarialNets as ma
+# sys.path.append('../models')
+print(sys.path)
+
+
+import DRGCN.models.graph as mg
+import DRGCN.models.gmm as g
+import DRGCN.models.adversarialNets as ma
 import scipy.sparse
-from utils import data_process, sparse
-from utils import configs, metrics
+from DRGCN.utils import configs
+from DRGCN.utils import data_process, sparse
+from DRGCN.utils import configs, metrics
 import tensorflow_probability as tfp
 
 tfd = tfp.distributions

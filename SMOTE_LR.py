@@ -11,9 +11,20 @@ features_index = np.c_[np.array([i for i in range(0, len(features))]), features]
 adj = adj.toarray()
 labels = change_label_format(labels)
 check_percentage(labels)
-print(1)
+label_5_delete_index = []
+for i in range(len(labels)):
+    if labels[i] == 5 and i % 2 == 1:
+        label_5_delete_index.append(i)
+# %%
+label_remain_index = np.delete([i for i in range(len(labels))], label_5_delete_index)
+labels = labels[label_remain_index]
+features = features[label_remain_index]
 
-from imblearn.under_sampling import NearMiss
+adj = np.take(np.take(adj, label_remain_index, axis=0), label_remain_index, axis=1)
+
+check_percentage(labels)
+
+# from imblearn.under_sampling import NearMiss
 # %%
 # 划分测试集训练集
 test_split_ratio = 0.7
@@ -44,7 +55,6 @@ def train_logistic_regression_prediction_multi_label(X_samp, y_samp):
 
     return classification_report(labels[idx_test], prepro, output_dict=True)
 
-
 features_train = features[idx_train]
 labels_train = labels[idx_train]
 features_train_0 = features_train[np.where(labels_train == 0)[0]]
@@ -53,32 +63,34 @@ features_train_1 = features_train[np.where(labels_train == 1)[0]]
 
 features_train_3 = features_train[np.where(labels_train == 3)[0]]
 features_train_4 = features_train[np.where(labels_train == 4)[0]]
+
+features_train_0_2 = np.concatenate((features_train_0, features_train_2))
+label_0_2 = [0] * len(features_train_0) + [2] * len(features_train_2)
+
 features_train_5 = features_train[np.where(labels_train == 5)[0]]
-features_train_0_3 = np.concatenate((features_train_0, features_train_3))
-label_0_3 = [0] * len(features_train_0) + [3] * len(features_train_3)
-
-
-
+# features_train_6 = features_train[np.where(labels_train == 6)[0]]
+features_train_4_5 = np.concatenate((features_train_4, features_train_5))
+label_4_5 = [4] * len(features_train_4) + [5] * len(features_train_5)
 
 import smote_variants as sv
 
 oversampler = sv.SMOTE()
-features_train_0_3, label_0_3 = oversampler.sample(features_train_0_3, label_0_3)
+features_train_0_2, label_0_2 = oversampler.sample(features_train_0_2, label_0_2)
 
-
+features_train_4_5, label_4_5 = oversampler.sample(features_train_4_5, label_4_5)
 
 X_resample = np.concatenate(
-    (features_train_0_3,features_train_1, features_train_2, features_train_4, features_train_5))
+    (features_train_0, features_train_0_2, features_train_3, features_train_4, features_train_4_5))
 
-y_resample = np.append(label_0_3, [1] * len(features_train_1))
-y_resample = np.append(y_resample, [2] * len(features_train_2))
+y_resample = np.append([0] * len(features_train_0), label_0_2)
+y_resample = np.append(y_resample, [3] * len(features_train_3))
 y_resample = np.append(y_resample, [4] * len(features_train_4))
-y_resample = np.append(y_resample, [5] * len(features_train_5))
+y_resample = np.append(y_resample, label_4_5)
 
 
 report = train_logistic_regression_prediction_multi_label(X_resample, y_resample)
 
-report_minority_recall = report['0']['recall']
-report_minority_precision = report['0']['precision']
-report_minority_f1_score = report['0']['f1-score']
+report_minority_recall = (report['0']['recall'] + report['5']['recall']) / 2
+report_minority_precision = (report['0']['precision'] + report['5']['precision']) / 2
+report_minority_f1_score = (report['0']['f1-score'] + report['5']['f1-score']) / 2
 report_accuracy = report['accuracy']

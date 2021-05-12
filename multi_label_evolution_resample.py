@@ -10,7 +10,7 @@ from comparison.pygcn.pygcn.train import comparison_gcn_train
 from evolution_resample import check_percentage, comparison_gcn, draw_violin_plot
 from gcn_utils import load_origin_data
 
-global_classification_method = 'LR'
+global_classification_method = 'GCN'
 
 
 def change_label_format(labels):
@@ -298,3 +298,7 @@ def main():
     #     comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)
 
 main()
+# for _ in range(100):
+#     comparison_gcn(adj, features, labels, idx_test, idx_train, 200, True)
+
+# report = train_logistic_regression_prediction_multi_label(features[idx_train], labels[idx_train])
